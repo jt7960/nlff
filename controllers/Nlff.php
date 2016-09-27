@@ -20,6 +20,10 @@ class Nlff extends CI_Controller {
         $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
         $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
+        $data['user_id'] = '';
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');
         
         $this->load->view('templates/header.php', $data);
         $this->load->view('nlff/create_league.php');
