@@ -1,15 +1,17 @@
 <div>
     <h1>Create A League</h1>
     <?php
+    echo validation_errors();
+    
     //open form
     $attributes = array('id'=>'', 'class'=>'', 'name'=>'form_create_league');
     $hidden = array('user_id' => $user_id);
     echo form_open('nlff/create_league', $attributes, $hidden);
-    //HIDDEN commissioner
+    //HIDDEN commissioner_id
     $data = array('id'=> '', 'class'=> '', 'name'=>'league_commissioner', 'value'=>$user_id);
     //league name
-    $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>'Enter League Name');
-    echo form_input($data) . "<br>";
+    $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>'');
+    echo 'League Name: ' . form_input($data) . "<br>";
     //Password
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
     echo 'League Password: ' . form_password($data) . ' Note: Leave the password blank to make public league.';
@@ -41,7 +43,8 @@
     echo 'On ' . form_radio($data);
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'0', 'checked'=>False);
     echo 'Off ' . form_radio($data);
-    echo '<br>';    
+    echo '<br>';
+    echo form_submit('mysubmit', 'Create');    
     ?>
     </form>
 </div>

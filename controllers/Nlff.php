@@ -25,8 +25,19 @@ class Nlff extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         
-        $this->load->view('templates/header.php', $data);
-        $this->load->view('nlff/create_league.php');
-        $this->load->view('templates/footer.php', $data);
+        if($this->form_validation->run() == FALSE)
+        {
+            $this->load->view('templates/header.php', $data);
+            $this->load->view('nlff/create_league.php');
+            $this->load->view('templates/footer.php', $data);
+        }
+        else
+        {
+            $this->load->view('templates/header.php', $data);
+            $this->load->view('nlff/create_league_success.php');
+            $this->load->view('templates/footer.php', $data);       
+        }
+        
+
     }
 }
