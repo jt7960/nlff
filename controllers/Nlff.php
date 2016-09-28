@@ -1,10 +1,11 @@
-<?php
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nlff extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
         $this->load->model('Nlff_model');
+        $this->load->helper('url');
     }
     
     public function index(){
@@ -54,6 +55,11 @@ class Nlff extends CI_Controller {
     public function register_user(){
         $data['css'] = '../assets/css/main.css'; 
         $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
+        $data['title'] = 'Register';
+        
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        
         if($this->form_validation->run() == FALSE)
             {
                 $this->load->view('templates/header.php', $data);
@@ -67,5 +73,28 @@ class Nlff extends CI_Controller {
             $this->load->view('nlff/register_user_success.php');
             $this->load->view('templates/footer.php', $data);       
         }
+    }
+    
+    public function login(){
+        $this->load->helper(array('form'));
+        $this->load->view('nlff/login.php');
+    }
+    
+    public function validate_login(){
+        $this->load->library('form_validation');
+        
+        $this->form_validation->set_rules('user_name', 'Username', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
+        
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('nlff/login');
+        }
+        else{
+            redirect('nlff/home', 'refresh');
+        }
+    }
+    
+    public function check_database($password){
+        
     }
 }
