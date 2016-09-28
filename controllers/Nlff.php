@@ -41,8 +41,7 @@ class Nlff extends CI_Controller {
             $this->load->view('templates/footer.php', $data);
         }
         else
-        {
-                 
+        {  
             $this->Nlff_model->create_league();
             $this->load->view('templates/header.php', $data);
             $this->load->view('nlff/create_league_success.php');
@@ -50,5 +49,23 @@ class Nlff extends CI_Controller {
         }
         
 
+    }
+
+    public function register_user(){
+        $data['css'] = '../assets/css/main.css'; 
+        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
+        if($this->form_validation->run() == FALSE)
+            {
+                $this->load->view('templates/header.php', $data);
+                $this->load->view('nlff/register_user.php');
+                $this->load->view('templates/footer.php', $data);
+            }
+        else
+        {  
+            $this->Nlff_model->register_user();
+            $this->load->view('templates/header.php', $data);
+            $this->load->view('nlff/register_user_success.php');
+            $this->load->view('templates/footer.php', $data);       
+        }
     }
 }
