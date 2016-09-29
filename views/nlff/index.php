@@ -24,7 +24,9 @@
                 </p>
                 <p>
                 <h1>Ready to get started?</h1>
-                <a href='nlff/create_league'>Click here to create a league.</a> You can change anything later so don't be skerd.
+                <a href='nlff/register_user'>Click here to create an account</a><br>
+                <a href='nlff/create_league'>Click here to create a league.</a> You can change anything later so don't be skerd.<br>
+                <a href='nlff/login'>Click here to log in </a>
 
                     
         </div>
