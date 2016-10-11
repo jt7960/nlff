@@ -5,6 +5,7 @@ class Nlff extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('Nlff_model');
+        $this->load->model('User_model');
         $this->load->helper('url');
     }
     
@@ -68,7 +69,7 @@ class Nlff extends CI_Controller {
             }
         else
         {  
-            $this->Nlff_model->register_user();
+            $this->user_model->register_user();
             $this->load->view('templates/header.php', $data);
             $this->load->view('nlff/register_user_success.php');
             $this->load->view('templates/footer.php', $data);       
@@ -95,6 +96,30 @@ class Nlff extends CI_Controller {
     }
     
     public function check_database($password){
+        //Field validation succeeded.  Validate against database
+        $username = $this->input->post('username');
         
+        //query the database
+        $result = $this->user_model->login($username, $password);
+        
+        if($result)
+        {
+            $sess_array = array();
+            foreach($result as $row)
+            {
+            $sess_array = array(
+                'id' => $row->id,
+                'username' => $row->username
+            );
+            $this->session->set_userdata('logged_in', $sess_array);
+            }
+            return TRUE;
+        }
+        else
+        {
+            $this->form_validation->set_message('check_database', 'Invalid username or password');
+            return false;
+        }
     }
+
 }
