@@ -15,6 +15,8 @@
         $data = array('id'=>'', 'class'=> '', 'name'=>'verify_user_password');
         echo 'Verify Password: ' . form_password($data);
         echo '<br>';
+        echo form_submit('register', 'Register');
+        echo "</form>";
         ?>
     </div>
         

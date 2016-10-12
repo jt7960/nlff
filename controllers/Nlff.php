@@ -61,8 +61,12 @@ class Nlff extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         
+        $this->form_validation->set_rules('user_password', 'Password', 'required');
+        $this->form_validation->set_rules('verify_user_password', 'Verify Password', 'required|matches[user_password]');
+
         if($this->form_validation->run() == FALSE)
             {
+                echo 'test';
                 $this->load->view('templates/header.php', $data);
                 $this->load->view('nlff/register_user.php');
                 $this->load->view('templates/footer.php', $data);
