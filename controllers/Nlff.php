@@ -7,6 +7,8 @@ class Nlff extends CI_Controller {
         $this->load->model('Nlff_model');
         $this->load->model('User_model');
         $this->load->helper('url');
+        $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
+        $this->load->library('ion_auth');
     }
     
     public function index(){
