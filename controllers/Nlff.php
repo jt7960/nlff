@@ -65,20 +65,29 @@ class Nlff extends CI_Controller {
         
         $this->form_validation->set_rules('user_password', 'Password', 'required');
         $this->form_validation->set_rules('verify_user_password', 'Verify Password', 'required|matches[user_password]');
-
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+        //print_r($_POST);
         if($this->form_validation->run() == FALSE)
             {
-                echo 'test';
                 $this->load->view('templates/header.php', $data);
                 $this->load->view('nlff/register_user.php');
                 $this->load->view('templates/footer.php', $data);
             }
         else
         {  
-            $this->user_model->register_user();
-            $this->load->view('templates/header.php', $data);
-            $this->load->view('nlff/register_user_success.php');
-            $this->load->view('templates/footer.php', $data);       
+            //QUESTION! Does CodeIgniter have a better way to access form-submitted values than using $_POST['']?????
+            $username = $_POST['user_name'];
+            $password = $_POST['user_password'];
+            $email = $_POST['email'];
+            if($this->ion_auth->register($username, $password, $email)){
+                echo 'registered!';
+            }
+            else{
+                echo 'not registered =(';
+            }
+            //$this->load->view('templates/header.php', $data);
+            //$this->load->view('nlff/register_user_success.php');
+            //$this->load->view('templates/footer.php', $data);       
         }
     }
     
