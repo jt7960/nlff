@@ -65,6 +65,7 @@ class Nlff extends CI_Controller {
         
         $this->form_validation->set_rules('user_password', 'Password', 'required');
         $this->form_validation->set_rules('verify_user_password', 'Verify Password', 'required|matches[user_password]');
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
 
         if($this->form_validation->run() == FALSE)
             {
@@ -74,57 +75,37 @@ class Nlff extends CI_Controller {
                 $this->load->view('templates/footer.php', $data);
             }
         else
-        {  
+            {  
             $this->user_model->register_user();
             $this->load->view('templates/header.php', $data);
             $this->load->view('nlff/register_user_success.php');
             $this->load->view('templates/footer.php', $data);       
+            }
         }
-    }
     
     public function login(){
+        $data['css'] = '../assets/css/main.css'; 
+        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
         $this->load->helper(array('form'));
-        $this->load->view('nlff/login.php');
-    }
-    
-    public function validate_login(){
         $this->load->library('form_validation');
-        
-        $this->form_validation->set_rules('user_name', 'Username', 'trim|required|xss_clean');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean|callback_check_database');
+        $this->form_validation->set_rules('user_password', 'Password', 'required');
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
         
         if($this->form_validation->run() == FALSE){
-            $this->load->view('nlff/login');
+            $this->load->view('templates/header.php', $data);
+            $this->load->view('nlff/login.php');
+            $this->load->view('templates/footer.php', $data);  
         }
         else{
-            redirect('nlff/home', 'refresh');
-        }
-    }
-    
-    public function check_database($password){
-        //Field validation succeeded.  Validate against database
-        $username = $this->input->post('username');
-        
-        //query the database
-        $result = $this->user_model->login($username, $password);
-        
-        if($result)
-        {
-            $sess_array = array();
-            foreach($result as $row)
-            {
-            $sess_array = array(
-                'id' => $row->id,
-                'username' => $row->username
-            );
-            $this->session->set_userdata('logged_in', $sess_array);
+            if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
+            if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
+            if($this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me)){
+                echo 'logged in';
             }
-            return TRUE;
-        }
-        else
-        {
-            $this->form_validation->set_message('check_database', 'Invalid username or password');
-            return false;
+            else{ echo 'not logged in';}
+            //$this->load->view('templates/header.php', $data);
+            //$this->load->view('nlff/');
+            //$this->load->view('templates/footer.php', $data);  
         }
     }
 
