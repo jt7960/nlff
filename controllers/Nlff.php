@@ -12,10 +12,8 @@ class Nlff extends CI_Controller {
     }
     
     public function index(){
-        $data['css'] = '../assets/css/main.css'; 
-        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
-        $data['title'] = 'Next Level Fantasy Football';
         $this->load->view('templates/header.php', $data);
+        $this->load->view('templates/title_bar.php');
         $this->load->view('nlff/index.php', $data);
         $this->load->view('templates/footer.php', $data);
     }
@@ -89,10 +87,12 @@ class Nlff extends CI_Controller {
             //$this->load->view('nlff/register_user_success.php');
             //$this->load->view('templates/footer.php', $data);       
         }
+    }
     
     public function login(){
         $data['css'] = '../assets/css/main.css'; 
         $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
+        $data['title'] = 'Next Level Fantasy Football';
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
         $this->form_validation->set_rules('user_password', 'Password', 'required');

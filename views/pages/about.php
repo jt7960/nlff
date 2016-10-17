@@ -1,1 +1,0 @@
-"Here is what our site is about"

@@ -1,0 +1,22 @@
+body{
+}
+
+#title_bar{
+    height: 20vh;
+    background-color:grey;
+    border: 1px solid black;
+}
+#title_bar div{
+    float:left;
+    
+}
+
+#brand{
+    width:75%;
+    text-align:left;
+}
+
+#user_status{
+    width:25%;
+    text-align: right;
+}
