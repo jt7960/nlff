@@ -1,6 +1,6 @@
 body{
 }
-
+/*
 #title_bar{
     height: 20vh;
     background-color:grey;
@@ -21,7 +21,9 @@ body{
     text-align: right;
 }
 
-#login_modal{
+*/
+#login_modal,
+#register_modal{
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -34,7 +36,8 @@ body{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-#login_modal_content {
+#login_modal_content, 
+#register_modal_content {
     background-color: #fefefe;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
@@ -43,13 +46,16 @@ body{
 }
 
 /* The Close Button */
-#close_login_modal {
+#close_login_modal,
+#close_register_modal {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
+#close_register_modal:hover,
+#close_register_modal:focus,
 #close_login_modal:hover,
 #close_login_modal:focus {
     color: black;

@@ -16,7 +16,7 @@ class Users extends CI_Controller {
             echo "<a href='users/".$username."'>".$username."</a>";
         }
         else{
-            echo "<a href='fake_location' id='sign_in_link'>Sign In</a> / <a href='users/register'>Register</a>";
+            echo "<a href='users/login' id='sign_in_link'>Sign In</a> / <a href='users/register' id='register_link'>Register</a>";
         }
     }
 
@@ -28,14 +28,32 @@ class Users extends CI_Controller {
         
         if($this->form_validation->run() == FALSE){
             //$this->load->view('user/login.php');
-            echo 'run validation false';
+            return FALSE;
         }
         else{
             echo 'run validation true';
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
             $this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me);
+            return TRUE;
         }
+    }
+
+    public function register(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('user_password', 'Password', 'required');
+        $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|matches[user_password]');
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
+
+        if($this->form_validation->run() == FALSE){
+            return FALSE;
+        }
+        else{
+            $this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']);
+            return TRUE;
+        }
+
+
     }
 
 }

@@ -19,6 +19,7 @@ class Home extends CI_Controller {
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
+        $this->load->view('/common/register.php');
         $this->load->view('/common/header.php');
 
     }
