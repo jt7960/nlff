@@ -1,7 +1,11 @@
 <div id='login_modal'>
-<form name='login_form' action='users/login'>
-Username: <input type='text' name='username'><br>
-Password: <input type='text' name='password'><br>
-<button id='login_button' name='submit'>Login</button>
+<div id='login_modal_content'>
+<span id='close_login_modal'>x</span><br>
+<form name='login_form' method='post' action='users/login'>
+Username: <input type='text' id='username_field' name='username'><br>
+Password: <input type='password' id = 'password_field' name='password'><br>
+<button id='login_submit_button' name='submit'>Login</button>
+</div>
+</div>
 </form>
 
