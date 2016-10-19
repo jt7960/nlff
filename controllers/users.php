@@ -20,4 +20,22 @@ class Users extends CI_Controller {
         }
     }
 
+    public function login(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('user_password', 'Password', 'required');
+        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
+        
+        if($this->form_validation->run() == FALSE){
+            $this->load->view('user/login.php'); 
+        }
+        else{
+            if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
+            if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
+            if($this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me)){
+                echo 'logged in';
+            }
+            $this->load->view('user/login.php'); 
+        }
+    }
+
 }
