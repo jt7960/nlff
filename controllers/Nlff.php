@@ -12,6 +12,7 @@ class Nlff extends CI_Controller {
     }
     
     public function index(){
+        $data = array();
         $this->load->view('templates/header.php', $data);
         $this->load->view('templates/title_bar.php');
         $this->load->view('nlff/index.php', $data);
