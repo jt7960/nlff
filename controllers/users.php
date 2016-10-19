@@ -16,25 +16,25 @@ class Users extends CI_Controller {
             echo "<a href='users/".$username."'>".$username."</a>";
         }
         else{
-            echo "<a href='users/signin'>Sign In</a> / <a href='users/register'>Register</a>";
+            echo "<a href='fake_location' id='sign_in_link'>Sign In</a> / <a href='users/register'>Register</a>";
         }
     }
 
     public function login(){
+        
         $this->load->library('form_validation');
         $this->form_validation->set_rules('user_password', 'Password', 'required');
         $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
         
         if($this->form_validation->run() == FALSE){
-            $this->load->view('user/login.php'); 
+            //$this->load->view('user/login.php');
+            echo 'run validation false';
         }
         else{
+            echo 'run validation true';
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
-            if($this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me)){
-                echo 'logged in';
-            }
-            $this->load->view('user/login.php'); 
+            $this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me);
         }
     }
 
