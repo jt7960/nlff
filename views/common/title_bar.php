@@ -10,7 +10,15 @@
                 <li><a href="#">Link </a></li>
             </ul>        
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"><div id='user_status'></div></span></a></li> 
+                    <!--<div id='user_status'></div>-->
+                    <?php
+                        if($this->ion_auth->logged_in()){
+                            echo "<li><a href='users/".$username."'>".$username."</a></li>";
+                        }
+                        else{
+                            echo "<li><span class='glyphicon glyphicon-user'><a href='fake_location' id='sign_in_link'> Sign In</a></span> / <a href='users/register'>Register</a></li>";
+                        }
+                    ?>
             </ul>
         </div>
     </div>
