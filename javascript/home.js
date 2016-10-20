@@ -43,9 +43,18 @@ $(document).ready(function(){
     });
 
     $('body').on('click', '#register_submit', function(e){
-        var username = document.getElementById('register_username').value();
-        var username = document.getElementById('register_email').value();
-        var username = document.getElementById('register_password').value();
+        e.preventDefault();
+        var username = document.getElementById('register_username').value;
+        var email = document.getElementById('register_email').value;
+        var password = document.getElementById('register_password').value;
+        var verify = document.getElementById('verify_register_password').value;
+        var data = {'username':username, 'email':email, 'password':password, 'verify':verify};
+        $.post('users/register', data, function(data,status,xhr){
+            console.log(status);
+            console.log(data);
+        })
     });
+
+
 
 }); //end document.ready()

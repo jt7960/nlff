@@ -23,8 +23,8 @@ class Users extends CI_Controller {
     public function login(){
         
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('user_password', 'Password', 'required');
-        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('email', 'User Email', 'required|valid_email');
         
         if($this->form_validation->run() == FALSE){
             //$this->load->view('user/login.php');
@@ -34,26 +34,37 @@ class Users extends CI_Controller {
             echo 'run validation true';
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
-            $this->ion_auth->login($_POST['user_email'], $_POST['user_password'], $remember_me);
+            $this->ion_auth->login($_POST['email'], $_POST['password'], $remember_me);
             return TRUE;
         }
     }
 
     public function register(){
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('user_password', 'Password', 'required');
-        $this->form_validation->set_rules('passconf', 'Password Confirmation', 'required|matches[user_password]');
-        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
+        $this->form_validation->set_rules('email', 'User Email', 'required|valid_email');
+        print_r($_POST);
 
         if($this->form_validation->run() == FALSE){
+            echo "validation did not run";
             return FALSE;
         }
         else{
+            echo 'validation ran';
             $this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']);
             return TRUE;
         }
-
-
     }
+
+    public function username_check($str){
+        if ($str == 'test'){
+            $this->form_validation->set_message('username_check', 'The {field} field can not be the word "test"');
+            return FALSE;
+            }
+            else{
+                return TRUE;
+            }
+        }
 
 }
