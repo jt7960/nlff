@@ -13,7 +13,7 @@ class Home extends CI_Controller {
 
     public function index(){
         
-        $data['javascript'] = array('jquery.js', 'home.js', 'bootstrap.js');
+        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'home.js');
         $data['css'] = array('main.css', 'bootstrap.css');
 
         $this->load->view('/common/header.php', $data);

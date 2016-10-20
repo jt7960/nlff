@@ -11,14 +11,14 @@ class Users extends CI_Controller {
         $this->load->library('ion_auth');
     }
 
-    public function user_status(){ //perhaps this could be extracted by data to a view, but why?
+   /* public function user_status(){ //perhaps this could be extracted by data to a view, but why? **Moved to title_bar view**
         if($this->ion_auth->logged_in()){
             echo "<a href='users/".$username."'>".$username."</a>";
         }
         else{
             echo "<a href='fake_location' id='sign_in_link'>Sign In</a> / <a href='users/register'>Register</a>";
         }
-    }
+    }*/
 
     public function login(){
         

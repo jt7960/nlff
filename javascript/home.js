@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     $('#user_status').load('users/user_status');
 
     $('body').on('click', '#sign_in_link', function(e){
@@ -27,5 +28,7 @@ $(document).ready(function(){
         var modal = document.getElementById('login_modal');
         modal.style.display = 'none';
     })
+
+
 
 }); //end document.ready()

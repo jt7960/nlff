@@ -68,9 +68,13 @@ class Nlff extends CI_Controller {
         //print_r($_POST);
         if($this->form_validation->run() == FALSE)
             {
-                $this->load->view('templates/header.php', $data);
+                $data['javascript'] = array('jquery.js', 'bootstrap.js', 'home.js');
+                $data['css'] = array('main.css', 'bootstrap.css');  
+               
+                $this->load->view('common/header.php', $data);
+                $this->load->view('/common/title_bar.php');
                 $this->load->view('nlff/register_user.php');
-                $this->load->view('templates/footer.php', $data);
+                $this->load->view('common/footer.php', $data);
             }
         else
         {  
