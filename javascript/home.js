@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+
     $('#user_status').load('users/user_status');
 
     //log in modal functions
@@ -54,6 +55,8 @@ $(document).ready(function(){
             console.log(data);
         })
     });
+
+
 
 
 
