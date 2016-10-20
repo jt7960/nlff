@@ -11,27 +11,23 @@ class Users extends CI_Controller {
         $this->load->library('ion_auth');
     }
 
-   /* public function user_status(){ //perhaps this could be extracted by data to a view, but why? **Moved to title_bar view**
-        if($this->ion_auth->logged_in()){
-            echo "<a href='users/".$username."'>".$username."</a>";
-        }
-        else{
-            echo "<a href='users/login' id='sign_in_link'>Sign In</a> / <a href='users/register' id='register_link'>Register</a>";
-        }
-    }*/
+   public function user_status(){ //perhaps this could be extracted by data to a view, but why? **Moved BACK! suck it Trebek** (how else can I dynamically change the login to logout on the fly?!?!)
+        $this->load->view('common/user_status');
+    }
 
     public function login(){
         
         $this->load->library('form_validation');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('email', 'User Email', 'required|valid_email');
-        
+        echo $_POST['remember_me'];
         if($this->form_validation->run() == FALSE){
             //$this->load->view('user/login.php');
+            echo 'did not run validation';
             return FALSE;
         }
         else{
-            echo 'run validation true';
+            echo 'ran validation';
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
             $this->ion_auth->login($_POST['email'], $_POST['password'], $remember_me);
@@ -66,5 +62,9 @@ class Users extends CI_Controller {
                 return TRUE;
             }
         }
+
+    public function logout(){
+        $this->ion_auth->logout();
+    }
 
 }

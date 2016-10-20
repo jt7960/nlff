@@ -17,19 +17,27 @@ $(document).ready(function(){
     });
 
     $('body').on('click', '#login_submit', function(e){
+        console.log('submit clicked');
         e.preventDefault();
-        var username = document.getElementById('login_username').value;
-        var password = document.getElementById('login_password').value;
-        console.log(username + password);
-        var data = {'username':username, 'password':password};
+        var email = document.getElementById('email_field').value;
+        var password = document.getElementById('password_field').value;
+        var remember_me = document.getElementById('remember_me').checked;
+        console.log(email + ' ' + password + ' ' + remember_me);
+        var data = {'email':email, 'password':password, 'remember_me': remember_me};
         $.post('users/login', data, function(data,status,xhr){
             console.log(data);
             $('#user_status').load('users/user_status');
         });
-        //$('#user_status').load('users/user_status');
-        var modal = document.getElementById('login_modal');
-        modal.style.display = 'none';
+        $('#user_status').load('users/user_status');
     });
+
+    //logout function
+    $('body').on('click', '#logoutBtn', function(){
+        var data = {};
+        $.post('users/logout', data, function(){
+            $('#user_status').load('users/user_status');
+        });
+    })
 
     //register modal functions
     $('body').on('click', '#register_link', function(e){
