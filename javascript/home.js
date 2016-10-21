@@ -37,7 +37,7 @@ $(document).ready(function(){
         $.post('users/logout', data, function(){
             $('#user_status').load('users/user_status');
         });
-    })
+    });
 
     //register modal functions
     $('body').on('click', '#register_link', function(e){

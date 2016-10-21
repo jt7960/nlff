@@ -23,6 +23,7 @@
                         <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal' id='login_submit' ><span class='glyphicon glyphicon-off'></span>Login</button>
                     </form>
                 </div>
+
                 <div class='modal-footer'>
                     <button type='submit' class='btn btn-default btn-default pull-left' data-dismiss='modal' ><span class='glyphicon glyphicon-remove'></span> Cancel</button>
                     <p>Not a member? <a href='users/register'>Sign Up</a></p>
