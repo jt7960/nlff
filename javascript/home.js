@@ -19,11 +19,11 @@ $(document).ready(function(){
     $('body').on('click', '#login_submit', function(e){
         console.log('submit clicked');
         e.preventDefault();
-        var email = document.getElementById('email_field').value;
+        var username = document.getElementById('username_field').value;
         var password = document.getElementById('password_field').value;
         var remember_me = document.getElementById('remember_me').checked;
-        console.log(email + ' ' + password + ' ' + remember_me);
-        var data = {'email':email, 'password':password, 'remember_me': remember_me};
+        console.log(username + ' ' + password + ' ' + remember_me);
+        var data = {'username':username, 'password':password, 'remember_me': remember_me};
         $.post('users/login', data, function(data,status,xhr){
             console.log(data);
             $('#user_status').load('users/user_status');
