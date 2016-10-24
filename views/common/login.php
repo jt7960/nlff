@@ -23,7 +23,7 @@
                                     <div class='checkbox'>
                                         <label><input id='remember_me' type='checkbox' name='remember_me' value='' checked>Remember me</label>
                                     </div>
-                                    <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal' id='login_submit' ><span class='glyphicon glyphicon-off'></span>Login</button>
+                                    <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal' id='login_submit' ><span class='glyphicon glyphicon-off'></span> Login</button>
                                 </form>
                             </div>
                             <div class='col-md-6'  style='padding-left: 15px; border-left: 1px solid #ccc;'>
@@ -45,14 +45,13 @@
                                         <label for='verify_register_password'> Verify Password</label> 
                                         <input type='password' class='form-control' name='verify' id='verify_register_password'>
                                     </div>
-                                    <button id='register_submit' name='register'>Register</button>
+                                    <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal'id='register_submit' name='register'><span class='glyphicon glyphicon-plus'></span> Register</button>
                                 </form>
                             </div>
                         </div>
                 </div>
                 <div class='modal-footer'>
                     <button type='submit' class='btn btn-default btn-default pull-left' data-dismiss='modal' ><span class='glyphicon glyphicon-remove'></span> Cancel</button>
-                    <p>Not a member? <a href='users/register'>Sign Up</a></p>
                     <p>Forgot <a href='#'>Password?</a></p>
                 </div>
             </div>
