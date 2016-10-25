@@ -20,6 +20,7 @@ class Home extends CI_Controller {
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
         //echo $this->ion_auth->logged_in(); //uncomment to see if you are logged in.
+        $this->load->view('/nlff/home.php');
         $this->load->view('/common/footer.php');
 
     }

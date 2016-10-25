@@ -13,15 +13,15 @@ class Nlff extends CI_Controller {
     
     public function index(){
         $data = array();
-        $this->load->view('templates/header.php', $data);
-        $this->load->view('templates/title_bar.php');
+        $this->load->view('common/header.php', $data);
+        $this->load->view('common/title_bar.php');
         $this->load->view('nlff/index.php', $data);
-        $this->load->view('templates/footer.php', $data);
+        $this->load->view('common/footer.php', $data);
     }
     
     public function create_league(){
-        $data['css'] = '../assets/css/main.css'; 
-        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
+        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'home.js');
+        $data['css'] = array('main.css', 'bootstrap.css');
         $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
         $data['user_id'] = '';
@@ -39,16 +39,16 @@ class Nlff extends CI_Controller {
         
         if($this->form_validation->run() == FALSE)
         {
-            $this->load->view('templates/header.php', $data);
+            $this->load->view('common/header.php', $data);
             $this->load->view('nlff/create_league.php');
-            $this->load->view('templates/footer.php', $data);
+            $this->load->view('common/footer.php', $data);
         }
         else
         {  
             $this->Nlff_model->create_league();
-            $this->load->view('templates/header.php', $data);
+            $this->load->view('common/header.php', $data);
             $this->load->view('nlff/create_league_success.php');
-            $this->load->view('templates/footer.php', $data);       
+            $this->load->view('common/footer.php', $data);       
         }
         
 
@@ -88,9 +88,9 @@ class Nlff extends CI_Controller {
             else{
                 echo 'not registered =(';
             }
-            //$this->load->view('templates/header.php', $data);
+            //$this->load->view('common/header.php', $data);
             //$this->load->view('nlff/register_user_success.php');
-            //$this->load->view('templates/footer.php', $data);       
+            //$this->load->view('common/footer.php', $data);       
         }
     }
     
@@ -104,9 +104,9 @@ class Nlff extends CI_Controller {
         $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
         
         if($this->form_validation->run() == FALSE){
-            $this->load->view('templates/header.php', $data);
+            $this->load->view('common/header.php', $data);
             $this->load->view('nlff/login.php');
-            $this->load->view('templates/footer.php', $data);  
+            $this->load->view('common/footer.php', $data);  
         }
         else{
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
@@ -115,9 +115,9 @@ class Nlff extends CI_Controller {
                 echo 'logged in';
             }
             else{ echo 'not logged in';}
-            //$this->load->view('templates/header.php', $data);
+            //$this->load->view('common/header.php', $data);
             //$this->load->view('nlff/');
-            //$this->load->view('templates/footer.php', $data);  
+            //$this->load->view('common/footer.php', $data);  
         }
     }
 
