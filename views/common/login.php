@@ -8,7 +8,9 @@
                     <h4 style='color:red;'><span class='glyphicon glyphicon-lock'></span></h4>
                     
                 </div>
-                <span id='login_modal_status'></span>
+                <div class='warning text-center'>
+                    <span id='login_modal_status'></span>
+                </div>
                 <div class='modal-body' style='padding:40px 50px;'>
                         <div class='row'>
                             <div class='col-md-6'>
