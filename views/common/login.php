@@ -8,7 +8,7 @@
                     <h4 style='color:red;'><span class='glyphicon glyphicon-lock'></span></h4>
                     
                 </div>
-                <span id='login_modal_status'></span>
+                <span id='login_modal_status'><?php echo validation_errors(); ?></span>
                 <div class='modal-body' style='padding:40px 50px;'>
                         <div class='row'>
                             <div class='col-md-6'>

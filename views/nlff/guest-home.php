@@ -1,5 +1,5 @@
 
-<div class='container'>
+<div class='container' id='home-container'>
     <div class='row'>
         <div class='row-height'>
             <div class='col-md-8 col-height col-top'>
@@ -16,7 +16,7 @@
                         <!-- Wrapper for slides -->
                         <div class='carousel-inner' role='listbox'>
                             <div class='item active'>
-                                <img src='http://cdn.na16.netdna-cdn.com/wp-content/uploads/2014/09/eli-manning-bald.png' alt=''>
+                                <img src='http://www.rotoworld.com/images/headshots/NFL/8694.jpg' alt=''>
                             </div>
 
                             <div class='item'>
@@ -47,16 +47,7 @@
             <div class='col-md-4 col-height col-top'>
                 <div class='inside'>
                     <div class='well' id='leagues-well'>
-                        <?php
-                            if($this->ion_auth->logged_in()){
-                                echo "<a href='nlff/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>";
-                                echo "<button type='button' class='btn btn-primary btn-block'> Join A Public League</button>";
-                                echo "<button type='button' class='btn btn-primary btn-block'> Join A Private League</button>";
-                            }
-                            else{
-                                echo "<button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>";
-                            }
-                        ?>
+                        <button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>
                     </div>
                 </div>
             </div>
