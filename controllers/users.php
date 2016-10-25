@@ -11,7 +11,7 @@ class Users extends CI_Controller {
         $this->load->library('ion_auth');
     }
 
-   public function user_status(){ //perhaps this could be extracted by data to a view, but why? **Moved BACK! suck it Trebek** (how else can I dynamically change the login to logout on the fly?!?!)
+   public function user_status(){ 
         $this->load->view('common/user_status');
     }
 
@@ -19,16 +19,22 @@ class Users extends CI_Controller {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('username', 'Username', 'required');
-        echo $_POST['remember_me'];
+        //echo $_POST['remember_me'];
         if($this->form_validation->run() == FALSE){
-            return FALSE;
+            echo 'You probably left a field blank or something.';
         }
         else{
-            echo 'ran validation';
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
             $this->ion_auth->login($_POST['username'], $_POST['password'], $remember_me);
-            return TRUE;
+            if($this->ion_auth->logged_in()){
+                echo 'true';
+            }
+            else{
+                echo validation_errors();
+            }
+
+            
         }
     }
 
@@ -38,18 +44,17 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
         $this->form_validation->set_rules('username', 'Username', 'callback_username_check');
-        print_r($_POST);
-
         if($this->form_validation->run() == FALSE){
-            $this->load->view('common/register');
-            return FALSE;
+            echo 'You probably left a field blank or something.';
         }
         else{
-            echo 'validation ran';
-            $this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']);
-            header("Location: " . base_url());
-            $this->login();
-            return TRUE;
+            if($this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']) == FALSE){
+                echo validation_errors();
+            }
+            else{
+                echo 'true';
+                $this->ion_auth->login($_POST['username'], $_POST['password'], FALSE);
+            }
         }
     }
 
