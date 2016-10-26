@@ -28,8 +28,7 @@ class Home extends CI_Controller {
     }
 
     public function home(){
-        if($this->ion_auth->logged_in()){$this->load->view('/nlff/user-home.php');}
-        else{$this->load->view('/nlff/guest-home.php');}
+        $this->load->view('/nlff/home.php');
     }
 
     
