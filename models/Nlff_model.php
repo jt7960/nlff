@@ -15,7 +15,8 @@ class Nlff_model extends CI_Model{
         'league_password' => $this->input->post('league_password'),
         'buffs' => $this->input->post('buffs'),
         'upgrades' => $this->input->post('upgrades'),
-        'reserves' => $this->input->post('reserves')
+        'reserves' => $this->input->post('reserves'),
+        'public' => $this->input->post('public')
             );
         return $this->db->insert('t_leagues', $data);
     }

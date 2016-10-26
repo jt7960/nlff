@@ -24,9 +24,16 @@
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
     echo 'League Password: ' . form_password($data) . ' Note: Leave the password blank to make public league.';
     echo '<br>';
+    //Verify Password
     $data = array('id'=>'', 'class'=> '', 'name'=>'verify_league_password');
     echo 'Verify Password: ' . form_password($data);
     echo '<br>';
+    //Public or Private
+    $data = array('name'=>'public', 'id'=>'public', 'value' => false);
+    echo 'Private League ' . form_radio($data) ;
+    $data = array('name'=>'public', 'id'=>'public', 'value' => true);
+    echo 'Public League ' . form_radio($data)  ;
+    echo ' <i> -- Private leagues require a password to join, public leagues are available for anyone to join.</i><br>';
     //Number of Teams
     $data = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
     echo "Number of Teams: " . form_dropdown('num_teams', $data, '12');
