@@ -20,8 +20,11 @@ class Nlff extends CI_Controller {
     }
     
     public function create_league(){
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'home.js');
+        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js');
         $data['css'] = array('main.css', 'bootstrap.css');
+        $this->load->view('/common/header.php', $data);
+        $this->load->view('/common/title_bar.php');
+        $this->load->view('/common/login.php');
         $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
         $data['user_id'] = '';

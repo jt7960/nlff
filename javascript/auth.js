@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 
-    $('#user_status').load('users/user_status');
+    $('#user_status').load('../users/user_status');
 
     $('body').on('click', '#login_submit', function(e){
         //console.log('submit clicked');
@@ -10,7 +10,7 @@ $(document).ready(function(){
         var password = document.getElementById('password_field').value;
         var remember_me = document.getElementById('remember_me').checked;
         var data = {'username':username, 'password':password, 'remember_me': remember_me};
-        $.post('users/login', data, function(reply,status,xhr){
+        $.post('../users/login', data, function(reply,status,xhr){
             console.log(reply);
             if(reply == 'true'){
                 location.reload();
@@ -25,8 +25,8 @@ $(document).ready(function(){
     //logout function
     $('body').on('click', '#logoutBtn', function(){
         var data = {};
-        $.post('users/logout', data, function(){
-            window.location.replace("/"); //go home logged out user, you're drunk.
+        $.post('../users/logout', data, function(){
+            window.location.replace("/");
         });
     });
 
@@ -37,10 +37,10 @@ $(document).ready(function(){
         var password = document.getElementById('register_password').value;
         var verify = document.getElementById('verify_register_password').value;
         var data = {'username':username, 'email':email, 'password':password, 'verify':verify};
-        $.post('users/register', data, function(reply, status, xhr){
+        $.post('../users/register', data, function(reply, status, xhr){
             console.log(reply);
             if (reply =='true'){
-                 $('#user_status').load('users/user_status');
+                 $('#user_status').load('../users/user_status');
             }
             else{
                 $('#loginModal').modal('show');
