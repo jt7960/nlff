@@ -2,7 +2,15 @@
     <h1>Create A League</h1>
     <?php
     echo validation_errors();
-    
+    if (!$this->ion_auth->logged_in())
+    {
+        echo "<div class='alert alert-warning'>";
+        echo "<a href='/index.php' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+        echo "<strong>Warning!</strong> You must be logged in to create a new league.";
+        echo "</div>";        
+    }
+    else
+    {
     //open form
     $attributes = array('id'=>'', 'class'=>'', 'name'=>'form_create_league');
     $hidden = array('user_id' => $user_id);
@@ -45,6 +53,7 @@
     echo 'Off ' . form_radio($data);
     echo '<br>';
     echo form_submit('mysubmit', 'Create');    
+    }
     ?>
     </form>
 </div>
