@@ -5,7 +5,7 @@
     if (!$this->ion_auth->logged_in())
     {
         echo "<div class='alert alert-warning'>";
-        echo "<a href='/index.php' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+        echo "<a href='' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
         echo "<strong>Warning!</strong> You must be logged in to create a new league.";
         echo "</div>";        
     }
