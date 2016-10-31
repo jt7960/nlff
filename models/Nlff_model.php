@@ -12,7 +12,7 @@ class Nlff_model extends CI_Model{
         $data = array(
         'commissioner_id' => $this->input->post('commissioner_id'),
         'league_name' => $this->input->post('league_name'),
-        'league_password' => $this->input->post('league_password'),
+        'password' => $this->input->post('league_password'),
         'buffs' => $this->input->post('buffs'),
         'upgrades' => $this->input->post('upgrades'),
         'reserves' => $this->input->post('reserves'),
