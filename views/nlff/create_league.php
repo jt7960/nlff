@@ -19,7 +19,7 @@
     //HIDDEN commissioner_id
     //$data = array('id'=> '', 'class'=> '', 'name'=>'league_commissioner', 'value'=>/*$user_id*/$user->id);
     //league name
-    $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>'');
+    $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>set_value('league_name'));
     echo 'League Name: ' . form_input($data) . "<br>";
     //Password
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
@@ -32,12 +32,13 @@
     //Public or Private
     $data = array('name'=>'public', 'id'=>'public', 'value' => false);
     echo 'Private League ' . form_radio($data) ;
-    $data = array('name'=>'public', 'id'=>'public', 'value' => true);
+    $data = array('name'=>'public', 'id'=>'public', 'value' => true, 'checked' => TRUE);
     echo 'Public League ' . form_radio($data)  ;
     echo ' <i> -- Private leagues require a password to join, public leagues are available for anyone to join.</i><br>';
     //Number of Teams
-    $data = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
-    echo "Number of Teams: " . form_dropdown('num_teams', $data, '12');
+    $options = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
+    $selected = array(set_value('num_teams'), '12');
+    echo "Number of Teams: " . form_dropdown('num_teams', $options, set_value('num_teams'));
     echo '<br>';
     //buffs (please can we rename these?)
     echo 'Buffs: ';

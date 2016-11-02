@@ -20,4 +20,12 @@ class Nlff_model extends CI_Model{
             );
         return $this->db->insert('t_leagues', $data);
     }
+    function get_users_leagues($user_id){
+        $this->db->select('league_id');
+        $this->db->from('t_leagues');
+        $this->db->where('commissioner_id', $user_id);
+
+        $query =  $this->db->get();
+        return $query->result();
+}
 }

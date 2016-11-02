@@ -1,7 +1,8 @@
 <?php
 Class User_model extends CI_Model
 {
-function login($username, $password)
+
+/*function login($username, $password)
   {
   $this -> db -> select('user_id, user_name, password');
   $this -> db -> from('t_users');
@@ -30,5 +31,9 @@ function register_user($username, $password)
 
   $this->db->insert('t_users', $data);
   } 
+}
+*/
+
+
 }
 ?>
