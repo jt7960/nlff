@@ -58,11 +58,15 @@
                     </div>
                     <?php endif; ?>
                 </div>
+                <?php
+                foreach ($leagues as $league){
+                    echo "<a href='nlff/leagues/".$league."/'>".$league. "</a><br>";
+                    }
+                ?>
             </div>
         </div>
     </div>
     <div class='container'>
-
     </div>
 
 

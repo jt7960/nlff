@@ -16,17 +16,18 @@ class Home extends CI_Controller {
     public function index(){
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
+            $data['leagues'] = $this->Nlff_model->get_users_leagues($user->id);
         }
         $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'home.js');
         $data['css'] = array('main.css', 'bootstrap.css');
-        $data['users_leagues'] = $this->Nlff_model->get_users_leagues($this->user->id);
+        
 
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
         //echo $this->ion_auth->logged_in(); //uncomment to see if you are logged in.
         $this->load->view('/nlff/home.php');
-        $this->load->view('/parts/users_leagues.php');
+        $this->load->view('/parts/users_leagues.php', $data);
         $this->load->view('/common/footer.php');
     }
 
