@@ -14,6 +14,7 @@ class Home extends CI_Controller {
     }
 
     public function index(){
+        $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
             $data['leagues'] = $this->Nlff_model->get_users_leagues($user->id);
