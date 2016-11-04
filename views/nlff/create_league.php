@@ -23,7 +23,7 @@
     echo 'League Name: ' . form_input($data) . "<br>";
     //Password
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
-    echo 'League Password: ' . form_password($data) . ' Note: Leave the password blank to make public league.';
+    echo 'League Password: ' . form_password($data) . ' Note: Password not required for a public league';
     echo '<br>';
     //Verify Password
     $data = array('id'=>'', 'class'=> '', 'name'=>'verify_league_password');
@@ -61,7 +61,7 @@
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'0', 'checked'=>False);
     echo 'Off ' . form_radio($data);
     echo '<br>';
-    echo form_submit('mysubmit', 'Create');    
+    echo form_submit('mysubmit', 'Create');  
     }
     ?>
     </form>

@@ -47,16 +47,15 @@ class Nlff extends CI_Controller {
             $this->load->view('common/footer.php', $data);
         }
         else
-        {  
-            if($this->Nlff_model->create_league()){
-                $this->load->view('common/header.php', $data);
-                $this->load->view('nlff/create_league_success.php');
-                $this->load->view('common/footer.php', $data);
-            }
-            else{
+        {
+            $league_id = $this->Nlff_model->create_league();   
+            if(!$league_id){
                 $this->load->view('common/header.php', $data);
                 $this->load->view('nlff/create_league.php');
                 $this->load->view('common/footer.php', $data);
+            }
+            else{
+                redirect('/league/home/'.$league_id, 'refresh');
             }
         }
         

@@ -59,9 +59,11 @@
                     <?php endif; ?>
                 </div>
                 <?php
+                //print_r($leagues as $id => $name);
                 foreach ($leagues as $league){
-                    echo "<a href='nlff/leagues/".$league."/'>".$league. "</a><br>";
-                    }
+                    foreach($league as $id => $name){
+                    echo "<a href='nlff/leagues/".$id."/'>".$name. "</a><br>";
+                }}
                 ?>
             </div>
         </div>
