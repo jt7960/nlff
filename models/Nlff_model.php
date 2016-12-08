@@ -8,7 +8,7 @@ class Nlff_model extends CI_Model{
                 $this->load->database();
         }
         
-    public function create_league(){
+public function create_league(){
         //this array is the data that will be used to create the league
         $league_data = array(
         'commissioner_id' => $this->input->post('commissioner_id'),
@@ -40,7 +40,7 @@ class Nlff_model extends CI_Model{
     }
 
 
-    function get_users_leagues($user_id){
+   function get_users_leagues($user_id){
         $leagues = array();
         $sql = "SELECT l.league_name as league_name, l.league_id as league_id FROM t_leagues as l JOIN t_users_leagues as ul ON l.league_id = ul.league_id WHERE ul.league_id IN
         (SELECT league_id FROM t_users_leagues WHERE user_id = ?)";
@@ -63,7 +63,7 @@ class Nlff_model extends CI_Model{
 
     //this function made me realize that leagues will need to support mulitple commissioners and so the db needs to add the many to many table
     //also, the function to create a league needs to be modified to support this.
-    public function get_league_commissioners($league_id){
+   public function get_league_commissioners($league_id){
         $league_commissioners = array();
         $sql = "SELECT commissioner_id FROM t_leagues_commissioners WHERE league_id = ?";
         $result = $this->db->query($sql, array($league_id));
