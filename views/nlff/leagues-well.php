@@ -1,6 +1,6 @@
 <?php
     if($this->ion_auth->logged_in()){
-        echo "<a href='nlff/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>";
+        echo "<a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>";
         echo "<button type='button' class='btn btn-primary btn-block'> Join A Public League</button>";
         echo "<button type='button' class='btn btn-primary btn-block'> Join A Private League</button>";
     }

@@ -15,7 +15,7 @@
     $attributes = array('id'=>'', 'class'=>'', 'name'=>'form_create_league');
     $user = $this->ion_auth->user()->row();
     $hidden = array('commissioner_id' => $user->id);
-    echo form_open('nlff/create_league', $attributes, $hidden);
+    echo form_open('home/create_league', $attributes, $hidden);
     //HIDDEN commissioner_id
     //$data = array('id'=> '', 'class'=> '', 'name'=>'league_commissioner', 'value'=>/*$user_id*/$user->id);
     //league name

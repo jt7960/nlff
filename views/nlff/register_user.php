@@ -4,7 +4,7 @@
         echo validation_errors();
         //open form
         $attributes = array('id'=>'', 'class'=>'', 'name'=>'register_user');
-        echo form_open('nlff/register_user', $attributes);
+        echo form_open('home/register_user', $attributes);
         //user name
         $data = array('id'=> '', 'class'=> '', 'name'=>'user_name', 'value'=>'');
         echo 'User Name: ' . form_input($data) . "<br>";

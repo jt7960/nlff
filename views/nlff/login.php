@@ -1,7 +1,7 @@
 <div>
     <h1>Login</h1>
    <?php echo validation_errors(); ?>
-   <?php echo form_open('nlff/login'); ?>
+   <?php echo form_open('home/login'); ?>
      <label for="user_email">Email:</label>
      <input type="text" size="20" id="user_email" name="user_email"/>
      <br/>
