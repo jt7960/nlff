@@ -22,6 +22,7 @@
     $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>set_value('league_name'));
     echo 'League Name: ' . form_input($data) . "<br>";
     //Password
+    echo "<div id='pw_div'>";
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
     echo 'League Password: ' . form_password($data) . ' Note: Password not required for a public league';
     echo '<br>';
@@ -29,6 +30,7 @@
     $data = array('id'=>'', 'class'=> '', 'name'=>'verify_league_password');
     echo 'Verify Password: ' . form_password($data);
     echo '<br>';
+    echo "</div>";
     //Public or Private
     $data = array('name'=>'public', 'id'=>'public', 'value' => false);
     echo 'Private League ' . form_radio($data) ;
