@@ -48,7 +48,7 @@
                 <div class='inside'>
                 <?php if($this->ion_auth->logged_in()): ?>
                     <div class='well' id='leagues-well'>
-                        <a href='nlff/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
+                        <a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
                         <button type='button' class='btn btn-primary btn-block'> Join A Public League</button>
                         <button type='button' class='btn btn-primary btn-block'> Join A Private League</button>
                     </div>
