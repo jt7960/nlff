@@ -1,7 +1,7 @@
 <div>
     <h1>Create A League</h1>
     <?php
-    echo validation_errors();
+    //echo validation_errors();
     if (!$this->ion_auth->logged_in())
     {
         echo "<div class='alert alert-warning'>";
@@ -12,7 +12,7 @@
     else
     {
     //open form
-    $attributes = array('id'=>'', 'class'=>'', 'name'=>'form_create_league');
+    $attributes = array('id'=>'', 'class'=>'create_league_form', 'name'=>'form_create_league');
     $user = $this->ion_auth->user()->row();
     $hidden = array('commissioner_id' => $user->id);
     echo form_open('home/create_league', $attributes, $hidden);
@@ -21,6 +21,14 @@
     //league name
     $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>set_value('league_name'));
     echo 'League Name: ' . form_input($data) . "<br>";
+
+    //Public or Private
+    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private', 'value' => true, 'checked' => TRUE);
+    echo 'Public League ' . form_radio($data)  ;
+    echo '<br>';
+    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private', 'value' => false);
+    echo 'Private League ' . form_radio($data) ;
+    echo '<br>';
     //Password
     echo "<div id='pw_div'>";
     $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
@@ -31,12 +39,6 @@
     echo 'Verify Password: ' . form_password($data);
     echo '<br>';
     echo "</div>";
-    //Public or Private
-    $data = array('name'=>'public', 'id'=>'public', 'value' => false);
-    echo 'Private League ' . form_radio($data) ;
-    $data = array('name'=>'public', 'id'=>'public', 'value' => true, 'checked' => TRUE);
-    echo 'Public League ' . form_radio($data)  ;
-    echo ' <i> -- Private leagues require a password to join, public leagues are available for anyone to join.</i><br>';
     //Number of Teams
     $options = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
     $selected = array(set_value('num_teams'), '12');

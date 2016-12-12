@@ -37,11 +37,8 @@ class Home extends CI_Controller {
     }
 
     public function create_league(){
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js');
-        $data['css'] = array('main.css', 'bootstrap.css');
-        $this->load->view('/common/header.php', $data);
-        $this->load->view('/common/title_bar.php');
-        $this->load->view('/common/login.php');
+        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'create_league.js');
+        $data['css'] = array('main.css', 'bootstrap.css', 'create_league.css');
         $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
         $data['user_id'] = '';
@@ -56,20 +53,21 @@ class Home extends CI_Controller {
             $this->form_validation->set_rules('league_password', 'Password', 'required');
                 }
             }
-        
         if($this->form_validation->run() == FALSE)
         {
             $this->load->view('common/header.php', $data);
+            $this->load->view('/common/title_bar.php');
             $this->load->view('nlff/create_league.php');
-            $this->load->view('common/footer.php', $data);
+            $this->load->view('common/footer.php');
         }
         else
         {
             $league_id = $this->Nlff_model->create_league();   
             if(!$league_id){
                 $this->load->view('common/header.php', $data);
+                $this->load->view('/common/title_bar.php');
                 $this->load->view('nlff/create_league.php');
-                $this->load->view('common/footer.php', $data);
+                $this->load->view('common/footer.php');
             }
             else{
                 redirect('/league/home/'.$league_id, 'refresh');

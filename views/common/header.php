@@ -8,7 +8,6 @@
                 foreach($css as $style){
                         echo "<link rel = 'stylesheet' type = 'text/css' href = '" . base_url() . "application/css/" . $style ."'>";
                         }
-                echo "<link rel = 'stylesheet' type = 'text/css' href = 'application/temp.css'>";
                 ?>
         </head>
         <body>
