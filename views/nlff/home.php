@@ -58,13 +58,17 @@
                     </div>
                     <?php endif; ?>
                 </div>
+                <div id="public_leagues_div">
+                <h1>Public leagues</h1>
                 <?php
                 //print_r($leagues as $id => $name);
+
                 foreach ($leagues as $league){
                     foreach($league as $id => $name){
                     echo "<a href='nlff/leagues/".$id."/'>".$name. "</a><br>";
                 }}
                 ?>
+                </div><!--end ofpublic leagues div-->
             </div>
         </div>
     </div>

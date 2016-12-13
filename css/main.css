@@ -154,3 +154,10 @@ body{
     vertical-align: bottom;
   }
 }
+
+#public_leagues_div{
+  border:1px solid black;
+  height: 100px;
+  overflow:auto;
+
+}
