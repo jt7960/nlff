@@ -56,7 +56,7 @@ class Home extends CI_Controller {
         if($this->form_validation->run() == FALSE)
         {
             $this->load->view('common/header.php', $data);
-            $this->load->view('/common/title_bar.php');
+            $this->load->view('common/title_bar.php');
             $this->load->view('nlff/create_league.php');
             $this->load->view('common/footer.php');
         }
@@ -65,7 +65,7 @@ class Home extends CI_Controller {
             $league_id = $this->Nlff_model->create_league();   
             if(!$league_id){
                 $this->load->view('common/header.php', $data);
-                $this->load->view('/common/title_bar.php');
+                $this->load->view('common/title_bar.php');
                 $this->load->view('nlff/create_league.php');
                 $this->load->view('common/footer.php');
             }
