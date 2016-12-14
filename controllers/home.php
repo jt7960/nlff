@@ -4,7 +4,7 @@ class Home extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('Nlff_model');
+        $this->load->model('Home_model');
         $this->load->model('User_model');
         $this->load->helper('url');
         $this->load->helper('form');
@@ -17,7 +17,7 @@ class Home extends CI_Controller {
         $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
-            $data['leagues'] = $this->Nlff_model->get_users_leagues($user->id);
+            $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
         }
         $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'home.js');
         $data['css'] = array('main.css', 'bootstrap.css');
@@ -27,13 +27,12 @@ class Home extends CI_Controller {
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
         //echo $this->ion_auth->logged_in(); //uncomment to see if you are logged in.
-        $this->load->view('/nlff/home.php');
-        $this->load->view('/parts/users_leagues.php', $data);
+        $this->load->view('/home/home.php');
         $this->load->view('/common/footer.php');
     }
 
     public function home(){
-        $this->load->view('/nlff/home.php');
+        $this->load->view('/home/home.php');
     }
 
     public function create_league(){
@@ -57,16 +56,16 @@ class Home extends CI_Controller {
         {
             $this->load->view('common/header.php', $data);
             $this->load->view('common/title_bar.php');
-            $this->load->view('nlff/create_league.php');
+            $this->load->view('home/create_league.php');
             $this->load->view('common/footer.php');
         }
         else
         {
-            $league_id = $this->Nlff_model->create_league();   
+            $league_id = $this->Home_model->create_league();   
             if(!$league_id){
                 $this->load->view('common/header.php', $data);
                 $this->load->view('common/title_bar.php');
-                $this->load->view('nlff/create_league.php');
+                $this->load->view('home/create_league.php');
                 $this->load->view('common/footer.php');
             }
             else{
@@ -96,7 +95,7 @@ class Home extends CI_Controller {
                
                 $this->load->view('common/header.php', $data);
                 $this->load->view('/common/title_bar.php');
-                $this->load->view('nlff/register_user.php');
+                $this->load->view('home/register_user.php');
                 $this->load->view('common/footer.php', $data);
             }
         else
@@ -112,7 +111,7 @@ class Home extends CI_Controller {
                 echo 'not registered =(';
             }
             //$this->load->view('common/header.php', $data);
-            //$this->load->view('nlff/register_user_success.php');
+            //$this->load->view('home/register_user_success.php');
             //$this->load->view('common/footer.php', $data);       
         }
     }
@@ -128,7 +127,7 @@ class Home extends CI_Controller {
         
         if($this->form_validation->run() == FALSE){
             $this->load->view('common/header.php', $data);
-            $this->load->view('nlff/login.php');
+            $this->load->view('home/login.php');
             $this->load->view('common/footer.php', $data);  
         }
         else{
@@ -139,7 +138,7 @@ class Home extends CI_Controller {
             }
             else{ echo 'not logged in';}
             //$this->load->view('common/header.php', $data);
-            //$this->load->view('nlff/');
+            //$this->load->view('home/');
             //$this->load->view('common/footer.php', $data);  
         }
     }

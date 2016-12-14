@@ -11,7 +11,16 @@
                 <li><a href="#">Link </a></li>
             </ul>        
             <ul class="nav navbar-nav navbar-right">
-                    <span id='user_status'></span>
+                    <span id='user_status'>
+                    <?php
+                    if($this->ion_auth->logged_in()){
+                        echo "<button type='button' class='btn btn-default btn-lg' id='logoutBtn'>Log Out</button>";
+                    }
+                    else{
+                        echo "<button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login</button>";
+                    }
+                    ?>
+                    </span>
             </ul>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <?php
 
-class Nlff_model extends CI_Model{
+class Home_model extends CI_Model{
             
             
     public function __construct()
