@@ -11,6 +11,8 @@ class Home extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
+        $data['javascript'] = array();
+        $data['css'] = array();
     }
 
     public function index(){
@@ -76,6 +78,16 @@ class Home extends CI_Controller {
 
     }
 
+    public function join_league(){
+        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'home.js');
+        $data['css'] = array('main.css', 'bootstrap.css');
+        $this->load->view('/common/header.php', $data);
+        $this->load->view('/common/title_bar.php');
+        $this->load->view('/home/join_league.php');
+        $this->load->view('/common/footer.php');
+    }
+
+    //MODALS
     public function register_user(){
         $data['css'] = '../assets/css/main.css'; 
         $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed

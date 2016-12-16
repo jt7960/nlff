@@ -49,8 +49,8 @@
                 <?php if($this->ion_auth->logged_in()): ?>
                     <div class='well' id='leagues-well'>
                         <a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
-                        <button type='button' class='btn btn-primary btn-block'> Join A Public League</button>
-                        <button type='button' class='btn btn-primary btn-block'> Join A Private League</button>
+                        <a href='home/join_league' type='button' class='btn btn-primary btn-block'>Join A League</a>
+                        
                     </div>
                 <?php else: ?>
                     <div class='well' id='leagues-well'>
@@ -59,13 +59,13 @@
                     <?php endif; ?>
                 </div>
                 <div id="public_leagues_div">
-                <h1>Public leagues</h1>
+                <h1>My Leagues</h1>
                 <?php
                 //print_r($leagues as $id => $name);
 
                 foreach ($leagues as $league){
                     foreach($league as $id => $name){
-                    echo "<a href='nlff/leagues/".$id."/'>".$name. "</a><br>";
+                    echo "<a href='league/home/".$id."/'>".$name. "</a><br>";
                 }}
                 ?>
                 </div><!--end ofpublic leagues div-->

@@ -37,7 +37,7 @@ public function create_league(){
             return FALSE;
         }
         return $user_league_data['league_id'];
-    }
+}
 
 
    function get_users_leagues($user_id){
@@ -59,7 +59,13 @@ public function create_league(){
             array_push($league_users, $user_id);
         }
         return $league_users;
-    } 
+    }
+
+    public function get_public_leagues(){
+        
+        //$current_epoch_time = get_date();
+        //$sql = "SELECT league_id, name, draft_date, no_teams FROM t_leagues WHERE draft_date > ? AND "
+    }
 
     //this function made me realize that leagues will need to support mulitple commissioners and so the db needs to add the many to many table
     //also, the function to create a league needs to be modified to support this.
