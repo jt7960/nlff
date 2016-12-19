@@ -7,7 +7,14 @@ class Home_model extends CI_Model{
         {
                 $this->load->database();
         }
-        
+
+public function create_team($array){
+    if(!$this->db->insert('t_teams', $array)){
+    return FALSE;
+    }
+
+}
+
 public function create_league(){
         //this array is the data that will be used to create the league
         $league_data = array(
@@ -37,7 +44,22 @@ public function create_league(){
             return FALSE;
         }
         return $user_league_data['league_id'];
+
+        $team_data = array(
+            'user_id' =>$league_data['commissioner_id'],
+            'team_name' => 'unnamed team',
+            'league_id' => $user_league_data['league_id'],
+            'draft_position' = '1',
+            'commissioner' = '1'
+        )
+        if(!create_league($team_data)){
+            //rollback changes by deleting the league that was just created: delete from t_leagues where league_id = $user_league_data['league_id']
+        }
 }
+
+    public function delete_league($league_id){
+        $sql = 'DELETE FROM t_leagues WHERE league_id = "' . $league_id . '"';
+    }
 
 
    function get_users_leagues($user_id){

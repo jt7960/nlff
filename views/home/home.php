@@ -16,19 +16,19 @@
                         <!-- Wrapper for slides -->
                         <div class='carousel-inner' role='listbox'>
                             <div class='item active'>
-                                <img src='http://www.rotoworld.com/images/headshots/NFL/8694.jpg' alt=''>
+                                <img src='http://wallpapercave.com/wp/9USb2ah.jpg' alt=''>
                             </div>
 
                             <div class='item'>
-                                <img src='http://media.gettyimages.com/photos/aaron-rodgers-of-the-green-bay-packers-poses-for-his-2008-nfl-at-picture-id81972904' alt=''>
+                                <img src='https://aos.iacpublishinglabs.com/question/aq/1400px-788px/tall-nfl-field-goal-post_35c09e670f010208.jpg?domain=cx.aos.ask.com' alt=''>
                             </div>
 
                             <div class='item'>
-                                <img src='http://prod.static.vikings.clubs.nfl.com/assets/images/imported/MIN/photos/clubimages/2016/06-June/tempsendejo-andrew-2011-headshot--nfl_mezz_1280_1024.jpg' alt=''>
+                                <img src='http://www.dartreview.com/wp-content/uploads/2016/11/Locker-room-2-pic-pic.jpg' alt=''>
                             </div>
 
                             <div class='item'>
-                                <img src='http://prod.static.eagles.clubs.nfl.com/assets/images/imported/PHI/photos/clubimages/2014/04-April/temppg_headshot_outtakes_042314--nfl_mezz_1280_1024.jpg' alt=''>
+                                <img src='http://cdn2.bigcommerce.com/n-arxsrf/83zess/products/34/images/607/Epic_Helmet__64171.1395631198.1280.1280.jpg?c=2' alt=''>
                             </div>
                         </div>
 
