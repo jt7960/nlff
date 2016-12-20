@@ -15,9 +15,32 @@ public function create_team($array){
 
 }
 
+public function test(){
+    
+}
+
+public function generate_public_team_name(){
+    $adjective = array('terrible', 'horrible', 'awful', 'smelly', 'yucky', 'awesome', 'holy');
+    $verb = array('farting', 'clamoring', 'barfing', 'losing');
+    $noun = array('suckers', 'idiots', 'losers', 'winners', 'fantasizers');
+    //logic to pick one of each, concatonate the 3, and return the result.
+}
+
+public function generate_league_id(){
+    while(true){
+        $league_id = rand(10000000000, 99999999999);
+        $this->db->where('league_id', $league_id);
+        if ($this->db->count_all_results('t_leagues') == 0){
+            return $league_id;
+            }
+        }
+}
+
 public function create_league(){
         //this array is the data that will be used to create the league
+        
         $league_data = array(
+        'league_id' => $this->generate_league_id(),
         'commissioner_id' => $this->input->post('commissioner_id'),
         'league_name' => $this->input->post('league_name'),
         'password' => $this->input->post('league_password'),
@@ -49,9 +72,9 @@ public function create_league(){
             'user_id' =>$league_data['commissioner_id'],
             'team_name' => 'unnamed team',
             'league_id' => $user_league_data['league_id'],
-            'draft_position' = '1',
-            'commissioner' = '1'
-        )
+            'draft_position' => '1',
+            'commissioner' => '1'
+        );
         if(!create_league($team_data)){
             //rollback changes by deleting the league that was just created: delete from t_leagues where league_id = $user_league_data['league_id']
         }
@@ -59,6 +82,7 @@ public function create_league(){
 
     public function delete_league($league_id){
         $sql = 'DELETE FROM t_leagues WHERE league_id = "' . $league_id . '"';
+
     }
 
 

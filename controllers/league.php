@@ -4,7 +4,7 @@ class League extends CI_Controller {
     
     public function __construct(){
         parent::__construct();
-        $this->load->model('Nlff_model');
+        $this->load->model('Home_model');
         $this->load->model('User_model');
         $this->load->helper('url');
         $this->load->helper('form');
@@ -16,9 +16,9 @@ class League extends CI_Controller {
     public function home($id){
         $this->id = $id;
         //verify the user is in the league
-            $league_users = $this->Nlff_model->get_league_members($id);
+            $league_users = $this->Home_model->get_league_members($id);
         //check if the user is the commish
-            $league_commissioners = $this->Nlff_model->get_league_commissioners($id);
+            $league_commissioners = $this->Home_model->get_league_commissioners($id);
     }
 
     public function players(){

@@ -13,6 +13,7 @@ class Home extends CI_Controller {
         $this->load->library('ion_auth');
         $data['javascript'] = array();
         $data['css'] = array();
+        //$this->Home_model->test();
     }
 
     public function index(){
