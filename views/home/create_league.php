@@ -11,31 +11,40 @@
     }
     else
     {
+    
+    
     //open form
+    echo '<div class="container">';
     $attributes = array('id'=>'', 'class'=>'create_league_form', 'name'=>'form_create_league');
     $user = $this->ion_auth->user()->row();
     $hidden = array('commissioner_id' => $user->id);
     echo form_open('home/create_league', $attributes, $hidden);
-    //HIDDEN commissioner_id
-    //$data = array('id'=> '', 'class'=> '', 'name'=>'league_commissioner', 'value'=>/*$user_id*/$user->id);
+    
+
+    echo "<div class='form-group row'>";
     //league name
-    $data = array('id'=> '', 'class'=> '', 'name'=>'league_name', 'value'=>set_value('league_name'));
-    echo 'League Name: ' . form_input($data) . "<br>";
+    echo '<div class="form-group">';
+    $data = array('id'=> 'id_league_name', 'class'=> 'form-control', 'name'=>'league_name', 'value'=>set_value('league_name'));
+    echo '<label for="id_league_name" class="col-xs-2 col-form-label">League Name</label>';
+    echo form_input($data);
+    echo '</div>';
 
     //Public or Private
-    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private', 'value' => true, 'checked' => TRUE);
+    echo '<div class="form-group">';
+    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private form-control', 'value' => true, 'checked' => TRUE);
     echo 'Public League ' . form_radio($data)  ;
     echo '<br>';
-    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private', 'value' => false);
+    $data = array('name'=>'public', 'id'=>'', 'class'=>'radio_public_private form-control', 'value' => false);
     echo 'Private League ' . form_radio($data) ;
     echo '<br>';
+    echo '<div class="form-group">';
     //Password
     echo "<div id='pw_div'>";
-    $data = array('id'=>'', 'class'=> '', 'name'=>'league_password');
+    $data = array('id'=>'', 'class'=> 'form-control', 'name'=>'league_password');
     echo 'League Password: ' . form_password($data) . ' Note: Password not required for a public league';
     echo '<br>';
     //Verify Password
-    $data = array('id'=>'', 'class'=> '', 'name'=>'verify_league_password');
+    $data = array('id'=>'', 'class'=> 'form-control', 'name'=>'verify_league_password');
     echo 'Verify Password: ' . form_password($data);
     echo '<br>';
     echo "</div>";
@@ -44,6 +53,10 @@
     $selected = array(set_value('num_teams'), '12');
     echo "Number of Teams: " . form_dropdown('num_teams', $options, set_value('num_teams'));
     echo '<br>';
+    echo "<div class='input-group date' id='datetimepicker1'>";
+    echo "<input type='text' class='form-control' />";
+    echo "<span class='input-group-addon'>";
+    echo "<span class='glyphicon glyphicon-calendar'></span></span></div>";
     //buffs (please can we rename these?)
     echo 'Buffs: ';
     $data = array('id'=>'', 'class'=> '', 'name'=>'buffs', 'value'=>'1', 'checked'=>TRUE);
@@ -68,7 +81,10 @@
     echo form_submit('mysubmit', 'Create');  
     }
     ?>
+</div>
     </form>
 </div>
+</div>
+
     
     

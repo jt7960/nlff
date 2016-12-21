@@ -63,9 +63,8 @@ class Home extends CI_Controller {
             $this->load->view('common/footer.php');
         }
         else
-        {
-            $league_id = $this->Home_model->create_league();   
-            if(!$league_id){
+        {   
+            if(!$league_id = $this->Home_model->create_league()){
                 $this->load->view('common/header.php', $data);
                 $this->load->view('common/title_bar.php');
                 $this->load->view('home/create_league.php');

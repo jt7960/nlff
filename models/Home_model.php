@@ -12,8 +12,7 @@ public function create_team($array){
     if(!$this->db->insert('t_teams', $array)){
     return FALSE;
     }
-
-}
+} 
 
 public function test(){
     
@@ -53,20 +52,11 @@ public function create_league(){
          if(!$this->db->insert('t_leagues', $league_data)){
              return FALSE;
             }
-        //run a query to get the id of the league just created, couple that with the creator id, and insert a record into the t_users_leagues table
-        $query = $this->db->query('SELECT MAX(league_id) as league_id FROM t_leagues WHERE commissioner_id = "'. $league_data['commissioner_id'].'"');
-        $row = $query->row();
-        echo $row->league_id;
-        $user_league_data = array(
-            'user_id' => $this->input->post('commissioner_id'),
-            'league_id' => $row->league_id
-        );
         //if creating hte t_users_leagues record fails return false and get out of here.
         //Also, handle what happens to the newly created league, delete it? what if we delete the wrong one?
         if(!$this->db->insert('t_users_leagues', $user_league_data)){
             return FALSE;
         }
-        return $user_league_data['league_id'];
 
         $team_data = array(
             'user_id' =>$league_data['commissioner_id'],
@@ -75,18 +65,27 @@ public function create_league(){
             'draft_position' => '1',
             'commissioner' => '1'
         );
-        if(!create_league($team_data)){
+        if(!$this->create_team($team_data)){
+            print_r( $this->db->error());
+            return false;
             //rollback changes by deleting the league that was just created: delete from t_leagues where league_id = $user_league_data['league_id']
         }
+        $commish = array('commissioner_id' => $league_data['commissioner_id'], 'league_id' => $league_id);
+
+        if(!$this->db->insert('t_league_commissioners', $commish)){
+            return false;
+        }
+        return true;
 }
 
     public function delete_league($league_id){
-        $sql = 'DELETE FROM t_leagues WHERE league_id = "' . $league_id . '"';
+        //this function needs to delete the league, the teams, the records in league_commissioneers and t_users_leagues,
+        // and league_upgrades if implemented
 
     }
 
 
-   function get_users_leagues($user_id){
+   public function get_users_leagues($user_id){
         $leagues = array();
         $sql = "SELECT l.league_name as league_name, l.league_id as league_id FROM t_leagues as l JOIN t_users_leagues as ul ON l.league_id = ul.league_id WHERE ul.league_id IN
         (SELECT league_id FROM t_users_leagues WHERE user_id = ?)";
