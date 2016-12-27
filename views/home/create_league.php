@@ -33,20 +33,20 @@
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
-    $data = array('name'=>'public', 'id'=>'public_league_radio_id', 'class'=>'form-check-input', 'value' => true, 'checked' => TRUE);
+    $data = array('name'=>'public', 'id'=>'public_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => true, 'checked' => TRUE);
     echo form_radio($data) . 'Public League';
     echo '</label></div>';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
-    $data = array('name'=>'public', 'id'=>'private_league_radio_id', 'class'=>'form-check-input', 'value' => false);
-    echo form_radio($data) . 'Private League' ;
+    $data = array('name'=>'public', 'id'=>'private_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => false);
+    echo form_radio($data) . 'Private League - requires password' ;
     echo '</label></div>';
     echo '</fieldset>';
     //Password
     echo "<div id='pw_div'>";
     echo '<div class="form-group">';
     $data = array('id'=>'', 'class'=> 'form-control', 'name'=>'league_password');
-    echo 'League Password: ' . form_password($data) . ' Note: Password not required for a public league';
+    echo 'League Password: ' . form_password($data);
     echo '<br>';
     echo '</div>';
     //Verify Password
@@ -65,9 +65,10 @@
     //Draft Date
     echo '<div class="form-group">';
     echo "<div class='input-group date' id='datetimepicker1'>";
-    echo "<input type='text' class='form-control' />";
+    echo '<label for="draft_date_input">Draft Date</label>';
+    echo "<input type='text' class='form-control' id='draft_date_input'>";
     echo "<span class='input-group-addon'>";
-    echo "<span class='glyphicon glyphicon-calendar'></span></span></div>";
+    echo "<span class='glyphicon glyphicon-calendar'></span></span></input></div>";
     echo '</div>';
     //buffs (please can we rename these?)
     echo '<div class="form-group">';

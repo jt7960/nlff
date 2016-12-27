@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
-    
+
     public function __construct(){
         parent::__construct();
         $this->load->model('Home_model');
@@ -11,8 +11,7 @@ class Home extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
-        $data['javascript'] = array();
-        $data['css'] = array();
+        
         //$this->Home_model->test();
     }
 
@@ -22,8 +21,6 @@ class Home extends CI_Controller {
             $user = $this->ion_auth->user()->row();
             $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
         }
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'home.js');
-        $data['css'] = array('main.css', 'bootstrap.css');
         
 
         $this->load->view('/common/header.php', $data);
@@ -34,13 +31,8 @@ class Home extends CI_Controller {
         $this->load->view('/common/footer.php');
     }
 
-    public function home(){
-        $this->load->view('/home/home.php');
-    }
-
     public function create_league(){
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'create_league.js');
-        $data['css'] = array('main.css', 'bootstrap.css', 'create_league.css');
+        $data['jquery_ui'] = true;
         $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
         $data['user_id'] = '';
@@ -79,8 +71,6 @@ class Home extends CI_Controller {
     }
 
     public function join_league(){
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js', 'home.js');
-        $data['css'] = array('main.css', 'bootstrap.css');
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/home/join_league.php');
@@ -89,8 +79,6 @@ class Home extends CI_Controller {
 
     //MODALS
     public function register_user(){
-        $data['css'] = '../assets/css/main.css'; 
-        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
         $data['title'] = 'Register';
         
         $this->load->helper('form');
@@ -129,8 +117,6 @@ class Home extends CI_Controller {
     }
     
     public function login(){
-        $data['css'] = '../assets/css/main.css'; 
-        $data['javascript'] = '../assets/javascript/main.js';//i imagine this could be an array of files if needed
         $data['title'] = 'Next Level Fantasy Football';
         $this->load->helper(array('form'));
         $this->load->library('form_validation');

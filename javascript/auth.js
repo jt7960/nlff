@@ -1,8 +1,5 @@
 $(document).ready(function(){
 
-
-    $('#user_status').load('../users/user_status');
-
     $('body').on('click', '#login_submit', function(e){
         //console.log('submit clicked');
         e.preventDefault();
