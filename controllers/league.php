@@ -27,8 +27,6 @@ class League extends CI_Controller {
             $user = $this->ion_auth->user()->row();
             $data['leagues'] = $this->Nlff_model->get_users_leagues($user->id);
         }
-        $data['javascript'] = array('jquery.js', 'bootstrap.js', 'auth.js');
-        $data['css'] = array('main.css', 'bootstrap.css');
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
