@@ -23,12 +23,6 @@
     $user = $this->ion_auth->user()->row();
     $hidden = array('commissioner_id' => $user->id);
     echo form_open('home/create_league', $attributes, $hidden);
-    //league name
-    echo '<div class="form-group">';
-    $data = array('id'=> 'league_name_id', 'class'=> 'form-control', 'name'=>'league_name', 'value'=>set_value('league_name'));
-    echo '<label for="league_name_id">League Name</label>';
-    echo form_input($data);
-    echo '</div>';
     //Public or Private
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';
@@ -42,34 +36,57 @@
     echo form_radio($data) . 'Private League - requires password' ;
     echo '</label></div>';
     echo '</fieldset>';
-    //Password
-    echo "<div id='pw_div'>";
+    echo "<div id='private_league_div'>";
+    //league name
     echo '<div class="form-group">';
-    $data = array('id'=>'', 'class'=> 'form-control', 'name'=>'league_password');
-    echo 'League Password: ' . form_password($data);
+    $data = array('id'=> 'league_name_id', 'class'=> 'form-control', 'name'=>'league_name', 'value'=>set_value('league_name'));
+    echo '<label for="league_name_id">League Name</label>';
+    echo form_input($data);
+    echo '</div>';
+    //Password
+    echo '<div class="form-group">';
+    $data = array('id'=>'league_password_input', 'class'=> 'form-control', 'name'=>'league_password');
+    echo '<label for="league_password_input">League Password:</label>' . form_password($data);
     echo '<br>';
     echo '</div>';
     //Verify Password
     echo '<div class="form-group">';
-    $data = array('id'=>'', 'class'=> 'form-control', 'name'=>'verify_league_password');
-    echo 'Verify Password: ' . form_password($data);
+    $data = array('id'=>'league_password_verify_input', 'class'=> 'form-control', 'name'=>'verify_league_password');
+    echo '<label for="league_password_verify_input">Verify Password:</label> ' . form_password($data);
     echo '<br>';
     echo "</div></div>";
     //Number of Teams
     echo '<div class="form-group">';
     $options = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
-    $selected = array(set_value('num_teams'), '12');
-    echo "Number of Teams: " . form_dropdown('num_teams', $options, set_value('num_teams'));
+    $selected = array('12');
+    $extra = array('class'=>'custom-select', 'id'=>'num_teams_select');
+    echo "<label for='num_teams_select'>Number of Teams: <label>" . form_dropdown('num_teams', $options, $selected, $extra);
     echo '<br>';
     echo '</div>';
     //Draft Date
     echo '<div class="form-group">';
-    echo "<div class='input-group date' id='datetimepicker1'>";
-    echo '<label for="draft_date_input">Draft Date</label>';
-    echo "<input type='text' class='form-control' id='draft_date_input'>";
-    echo "<span class='input-group-addon'>";
-    echo "<span class='glyphicon glyphicon-calendar'></span></span></input></div>";
+    echo '<label for="draft_date">Draft Date</label>';
+    echo "<input type='text' class='form-control' id='draft_date'>";
+    echo "</input></div>";
+    //Draft Time
+    echo '<div class="form-group">';
+    $options = array();
+    $extra = array('id' => 'draft_time','class' => 'form-control');
+    $selected = array();
+    $extra = array('class'=>'custom-select', 'id'=>'draft_time');
+    for($ampm=0; $ampm<2; $ampm++){
+        for($h=1; $h<13; $h++){
+            for($m=00; $m<60; $m+=15){
+                if($ampm == 0){$ap = 'am';}
+                if($ampm == 1){$ap = 'pm';}
+                $options[] = $h . ":" . sprintf("%02d", $m) . " " . $ap;
+                }
+            }
+        }
+    echo "<label for='draft_time'>Draft Time: </label>" . form_dropdown('draft_time', $options, $selected, $extra);
+    echo '<br>';
     echo '</div>';
+ 
     //buffs (please can we rename these?)
     echo '<div class="form-group">';
     echo 'Buffs: ';

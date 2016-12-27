@@ -1,14 +1,16 @@
 $(document).ready(function(){
-    $('#pw_div').hide();
+    $('#private_league_div').hide();
 
 
     $('body').on('click', '.radio_public_private', function(){
         if(this.value == true){
-            $('#pw_div').slideUp();
+            $('#private_league_div').slideUp();
         }
         if(this.value == false){
-            $('#pw_div').slideDown();
+            $('#private_league_div').slideDown();
         }
     });
+
+    $( "#draft_date" ).datepicker();
 
 });
