@@ -51,11 +51,13 @@ public function create_league(){
             );
          //if the insert fails, return false and get out of here   
          if(!$this->db->insert('t_leagues', $league_data)){
+             print_r( $this->db->error());
              return FALSE;
             }
         //if creating hte t_users_leagues record fails return false and get out of here.
         //Also, handle what happens to the newly created league, delete it? what if we delete the wrong one?
         if(!$this->db->insert('t_users_leagues', $user_league_data)){
+            print_r( $this->db->error());
             return FALSE;
         }
 
@@ -74,6 +76,7 @@ public function create_league(){
         $commish = array('commissioner_id' => $league_data['commissioner_id'], 'league_id' => $league_id);
 
         if(!$this->db->insert('t_league_commissioners', $commish)){
+            print_r( $this->db->error());
             return false;
         }
         return true;
