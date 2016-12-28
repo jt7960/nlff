@@ -9,9 +9,7 @@ class Home_model extends CI_Model{
         }
 
 public function create_team($array){
-    if(!$this->db->insert('t_teams', $array)){
-    return FALSE;
-    }
+    $this->db->insert('t_teams', $array);
 } 
 
 public function test(){
@@ -36,58 +34,32 @@ public function generate_league_id(){
 }
 
 public function create_league(){
-        //this array is the data that will be used to create the league
-        
-        $league_data = array(
-        'league_id' => $this->generate_league_id(),
-        'commissioner_id' => $this->input->post('commissioner_id'),
-        'league_name' => $this->input->post('league_name'),
-        'password' => $this->input->post('league_password'),
-        'buffs' => $this->input->post('buffs'),
-        'upgrades' => $this->input->post('upgrades'),
-        'reserves' => $this->input->post('reserves'),
-        'public' => $this->input->post('public'),
-        'draft_date'=> $this->input->post('draft_date') . " " . $this->input->post('draft_time')
-            );
-         //if the insert fails, return false and get out of here   
-         if(!$this->db->insert('t_leagues', $league_data)){
-             print_r( $this->db->error());
-             return FALSE;
-            }
-        //if creating hte t_users_leagues record fails return false and get out of here.
-        //Also, handle what happens to the newly created league, delete it? what if we delete the wrong one?
-        if(!$this->db->insert('t_users_leagues', $user_league_data)){
-            print_r( $this->db->error());
-            return FALSE;
-        }
-
-        $team_data = array(
-            'user_id' =>$league_data['commissioner_id'],
-            'team_name' => 'unnamed team',
-            'league_id' => $user_league_data['league_id'],
-            'draft_position' => '1',
-            'commissioner' => '1'
+    //this array is the data that will be used to create the league
+    $league_data = array(
+    'league_id' => $this->generate_league_id(),
+    'creator_id' => $this->input->post('creator_id'),
+    'league_name' => $this->input->post('league_name'),
+    'password' => $this->input->post('league_password'),
+    'buffs' => $this->input->post('buffs'),
+    'upgrades' => $this->input->post('upgrades'),
+    'reserves' => $this->input->post('reserves'),
+    'public' => $this->input->post('public'),
+    'draft_date'=> strtotime($this->input->post('draft_date') . " " . $this->input->post('draft_time') . ' GMT')
         );
-        if(!$this->create_team($team_data)){
-            print_r( $this->db->error());
-            return false;
-            //rollback changes by deleting the league that was just created: delete from t_leagues where league_id = $user_league_data['league_id']
-        }
-        $commish = array('commissioner_id' => $league_data['commissioner_id'], 'league_id' => $league_id);
-
-        if(!$this->db->insert('t_league_commissioners', $commish)){
-            print_r( $this->db->error());
-            return false;
-        }
-        return true;
+    //this array is the data for the t_team insert
+    $team_data = array(
+    'user_id' =>$league_data['creator_id'],
+    'team_name' => 'unnamed team',
+    'league_id' => $league_data['league_id'],
+    'draft_position' => '1',
+    'commissioner' => '1'
+    );
+    //create the t_league record
+    $this->db->insert('t_leagues', $league_data);
+    //create the t_team record
+    $this->create_team($team_data);
+    return $league_data['league_id'];
 }
-
-    public function delete_league($league_id){
-        //this function needs to delete the league, the teams, the records in league_commissioneers and t_users_leagues,
-        // and league_upgrades if implemented
-
-    }
-
 
    public function get_users_leagues($user_id){
         $leagues = array();
@@ -127,5 +99,20 @@ public function create_league(){
         }
         return $league_commissioners;
     }
+
+//Business Rules
+//A user can only be the founder of 1 public league
+    public function get_users_public_leagues_count($user_id){
+        $this->db->where('user_id', $user_id);
+        $this->db->where('public', '1');
+        $this->db->from('t_leagues');
+        if($this->db->count_all_results() > 1){
+            return FALSE;
+        }
+        else{
+            return TRUE;
+        }
+    }
+     
 
 }
