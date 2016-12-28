@@ -25,7 +25,7 @@ class League extends CI_Controller {
         $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
-            $data['leagues'] = $this->Nlff_model->get_users_leagues($user->id);
+            $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
         }
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
@@ -37,7 +37,7 @@ class League extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->load->view('/nlff/players.php', $data);
+        $this->load->view('/league/players.php', $data);
         $this->load->view('/common/footer.php');
     }
 
