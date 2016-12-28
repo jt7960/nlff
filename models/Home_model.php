@@ -47,7 +47,7 @@ public function create_league(){
         'upgrades' => $this->input->post('upgrades'),
         'reserves' => $this->input->post('reserves'),
         'public' => $this->input->post('public'),
-        'draft_date'=> strtotime($this->input->post('draft_date') . " " . $this->input->post('draft_time'))
+        'draft_date'=> $this->input->post('draft_date') . " " . $this->input->post('draft_time')
             );
          //if the insert fails, return false and get out of here   
          if(!$this->db->insert('t_leagues', $league_data)){

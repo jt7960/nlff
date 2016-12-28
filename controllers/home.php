@@ -33,16 +33,15 @@ class Home extends CI_Controller {
 
     public function create_league(){
         $data['jquery_ui'] = true;
-        $data['identity'] = ''; //we want to know who is logged in, left blank for now
         $data['title'] = 'Create a New League';
-        $data['user_id'] = '';
         
         $this->load->helper('form');
         $this->load->library('form_validation');
         
         $this->form_validation->set_rules('league_name', 'League Name', 'required');
         if($_POST){
-            if($_POST['league_password'] != ''){
+            print_r($_POST);
+            if($_POST['public'] == false){ //probably should change this to check if the league is private too
             $this->form_validation->set_rules('verify_league_password', 'Verify Password', 'required|matches[league_password]');
             $this->form_validation->set_rules('league_password', 'Password', 'required');
                 }

@@ -33,7 +33,7 @@
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
     $data = array('name'=>'public', 'id'=>'private_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => false);
-    echo form_radio($data) . 'Private League - requires password' ;
+    echo form_radio($data) . 'Private League - <span class="text-muted">requires password</span>' ;
     echo '</label></div>';
     echo '</fieldset>';
     echo "<div id='private_league_div'>";
@@ -74,15 +74,16 @@
     $extra = array('id' => 'draft_time','class' => 'form-control');
     $selected = array();
     $extra = array('class'=>'custom-select', 'id'=>'draft_time');
-    for($ampm=0; $ampm<2; $ampm++){
-        for($h=1; $h<13; $h++){
-            for($m=00; $m<60; $m+=15){
-                if($ampm == 0){$ap = 'am';}
-                if($ampm == 1){$ap = 'pm';}
-                $options[] = $h . ":" . sprintf("%02d", $m) . " " . $ap;
-                }
+    $hours = array('12','1','2','3','4','5','6','7','8','9','10','11');
+    $minutes = array('00','15','30','45');
+    $ampm = array('am','pm');
+    foreach($ampm as $ap){
+        foreach($hours as $hour){
+            foreach($minutes as $minute){
+                $options[$hour .':'. sprintf("%02d", $minute) .' '. $ap] = $hour .':'. sprintf("%02d", $minute) .' '. $ap;
             }
         }
+    }
     echo "<label for='draft_time'>Draft Time: </label>" . form_dropdown('draft_time', $options, $selected, $extra);
     echo '<br>';
     echo '</div>';
