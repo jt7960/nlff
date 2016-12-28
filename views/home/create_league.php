@@ -1,5 +1,5 @@
 <div>
-    <h1>Create A League</h1>
+    
     <?php
     print_r(validation_errors());
     
@@ -14,8 +14,8 @@
     {
     ?>
     
-    <div class='container'><div class='row'><div class="col-sm-2"></div></div></div>
-    <div class='container'><div class='row'><div class="col-sm-8">
+    <div class='container'><div class='row'><div class="col-sm-3"></div></div></div>
+    <div class='container'><div class='row'><div class="col-sm-6"><h1>Create A League</h1>
     
     <?php
 
@@ -128,7 +128,7 @@
 
 </form>
 </div></div></div>
-<div class='container'><div class='row'><div class="col-sm-2"></div></div></div>
+<div class='container'><div class='row'><div class="col-sm-3"></div></div></div>
 
     
     

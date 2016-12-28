@@ -14,7 +14,7 @@ class Home extends CI_Controller {
         
         //$this->Home_model->test();
     }
-
+    //Site Pages
     public function index(){
         $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
@@ -32,8 +32,6 @@ class Home extends CI_Controller {
     }
 
     public function create_league(){
-        $now =  getdate();
-        echo $now[0];
         $data['title'] = 'Create a New League';
         
         $this->load->helper('form');
@@ -67,7 +65,7 @@ class Home extends CI_Controller {
             $this->load->view('home/create_league.php');
             $this->load->view('common/footer.php');
             }   
-        }
+    }
 
     public function join_league(){
         $this->load->view('/common/header.php', $data);
