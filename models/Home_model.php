@@ -44,6 +44,7 @@ public function create_league(){
     'upgrades' => $this->input->post('upgrades'),
     'reserves' => $this->input->post('reserves'),
     'public' => $this->input->post('public'),
+    'num_teams' => $this->input->post('num_teams'),
     'draft_date'=> strtotime($this->input->post('draft_date') . " " . $this->input->post('draft_time') . ' GMT')
         );
     //this array is the data for the t_team insert
@@ -83,7 +84,8 @@ public function create_league(){
 
     public function get_open_leagues(){
         $user = $this->ion_auth->user()->row();
-        $sql = ('SELECT DISTINCT * FROM `v_open_leagues` ol JOIN t_teams t ON ol.league_id = t.league_id WHERE t.user_id NOT IN (?) GROUP BY ol.league_id');
+        $now = time();
+        $sql = ('SELECT DISTINCT * FROM `v_open_leagues` ol JOIN t_teams t ON ol.league_id = t.league_id WHERE t.user_id NOT IN (?) AND ol.draft_date > "'.$now.'" GROUP BY ol.league_id');
         $query = $this->db->query($sql, array($user->id));
         return $query->result();
     }
@@ -100,6 +102,14 @@ public function create_league(){
         return $league_commissioners;
     }
 
+    public function join_league($league_id, $password){
+        $user = $this->ion_auth->user()->row();
+        $sql = "SELECT COUNT(*) as leagues FROM t_leagues l JOIN t_teams t ON l.league_id = t.league_id WHERE l.league_id = ? AND l.password = ? AND user_id NOT IN (?)";
+        $query = $this->db->query($sql, array($league_id, $password, $user->id));
+        $row = $query->row();
+        return $row->leagues;
+    }
+
 //Business Rules
 //A user can only be the founder of 1 public league
     public function get_users_public_leagues_count($user_id){
@@ -112,7 +122,6 @@ public function create_league(){
         else{
             return TRUE;
         }
-    }
-     
+    }     
 
 }

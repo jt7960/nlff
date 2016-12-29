@@ -68,6 +68,14 @@ class Home extends CI_Controller {
     }
 
     public function join_league(){
+        if($_POST){
+            //print_r($_POST);
+            $league_id = $_POST['league_id'];
+            $league_password = $_POST['league_password'];
+            $matching_leagues = $this->Home_model->join_league($league_id, $league_password);
+            echo $matching_leagues;
+
+            }
         $data['title'] = 'Join A League';
         $data['open_leagues'] = $this->Home_model->get_open_leagues();
         $this->load->view('/common/header.php', $data);
