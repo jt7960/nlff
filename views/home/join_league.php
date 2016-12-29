@@ -3,7 +3,15 @@
         <div class='col-md-12 text-center'><h1>Join A League</h1></div>
     </div>
     <div class='row'>
-        <div class='col-md-6 text-center'><h2>Public Leagues</h2></div>
+        <div class='col-md-6 text-center'><h2>Public Leagues</h2>
+        <div class='table-responsive'><table class='table' id='open_public_leagues'><tr><th>Teams</th><th>Draft Date/Time</th><th>Join</th></tr>
+
+        </table></div>
+        <?php
+
+        ?>
+        </table>
+        </div>
         <div class='col-md-6 text-center'><h2>Private League</h2></div>
     </div>
     <div class='row'>

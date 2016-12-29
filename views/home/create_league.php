@@ -1,7 +1,8 @@
 <div>
-    <h1>Create A League</h1>
+    
     <?php
-    //echo validation_errors();
+    print_r(validation_errors());
+    
     if (!$this->ion_auth->logged_in())
     {
         echo "<div class='alert alert-warning'>";
@@ -13,27 +14,29 @@
     {
     ?>
     
-    <div class='container'><div class='row'><div class="col-sm-2"></div></div></div>
-    <div class='container'><div class='row'><div class="col-sm-8">
-    
+    <div class='container-fluid'>
+    <div class='row'>
+    <div class="col-sm-4 text-center"></div>
+    <div class="col-sm-4 text-center">
+    <h1>Create A League</h1>
     <?php
 
     //open form
     $attributes = array('id'=>'', 'class'=>'create_league_form', 'name'=>'form_create_league');
     $user = $this->ion_auth->user()->row();
-    $hidden = array('commissioner_id' => $user->id);
+    $hidden = array('creator_id' => $user->id);
     echo form_open('home/create_league', $attributes, $hidden);
     //Public or Private
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
-    $data = array('name'=>'public', 'id'=>'public_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => true, 'checked' => TRUE);
+    $data = array('name'=>'public', 'id'=>'public_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => '1', 'checked' => TRUE);
     echo form_radio($data) . 'Public League';
     echo '</label></div>';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
-    $data = array('name'=>'public', 'id'=>'private_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => false);
-    echo form_radio($data) . 'Private League - <span class="text-muted">requires password</span>' ;
+    $data = array('name'=>'public', 'id'=>'private_league_radio_id', 'class'=>'form-check-input radio_public_private', 'value' => '0');
+    echo form_radio($data) . 'Private League - <span class="text-muted">requires password</span>';
     echo '</label></div>';
     echo '</fieldset>';
     echo "<div id='private_league_div'>";
@@ -64,10 +67,12 @@
     echo '<br>';
     echo '</div>';
     //Draft Date
-    echo '<div class="form-group">';
+    echo '<div class="form-group ">';
+    $data = array('class'=>'form-control', 'id'=>'draft_date', 'name'=>'draft_date', 'value'=>set_value('draft_date'));
     echo '<label for="draft_date">Draft Date</label>';
-    echo "<input type='text' class='form-control' id='draft_date'>";
-    echo "</input></div>";
+    echo form_input($data);
+    echo '<br>';
+    echo "</div>";
     //Draft Time
     echo '<div class="form-group">';
     $options = array();
@@ -84,44 +89,48 @@
             }
         }
     }
-    echo "<label for='draft_time'>Draft Time: </label>" . form_dropdown('draft_time', $options, $selected, $extra);
+    echo "<label for='draft_time'>Draft Time: </label>" . form_dropdown('draft_time', $options, $selected, $extra) . 'GMT';
     echo '<br>';
     echo '</div>';
  
     //buffs (please can we rename these?)
-    echo '<div class="form-group">';
-    echo 'Buffs: ';
+    echo '<fieldset class="form-group">';
+    echo '<div class="form-check">';
+    echo '<label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'buffs', 'value'=>'1', 'checked'=>TRUE);
-    echo 'On ' . form_radio($data);
+    echo form_radio($data) . 'Buffs On';
+    echo '</label></div>';
+    echo '<div class="form-check">';
+    echo '<label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'buffs', 'value'=>'0', 'checked'=>False);
-    echo 'Off ' . form_radio($data);
-    echo '<br>';
-    echo '</div>';
+    echo form_radio($data) . 'Buffs Off';
+    echo '</label></div>';
+    echo '</fieldset>';
     //Roster Upgrades
-    echo '<div class="form-group">';
-    echo 'Roster Upgrades: ';
+    echo '<fieldset class="form-group"><div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'upgrades', 'value'=>'1', 'checked'=>TRUE);
-    echo 'On ' . form_radio($data);
+    echo form_radio($data) . 'Roster Upgrades On';
+    echo '</label></div><div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'upgrades', 'value'=>'0', 'checked'=>False);
-    echo 'Off ' . form_radio($data);
-    echo '<br>';
-    echo '</div>';
+    echo form_radio($data) . 'Roster Upgrades Off';
+    echo '</label></div></fieldset>';
     //Reserve Spot
-    echo '<div class="form-group">';
-    echo 'Reserve Roster Spot: ';
+    echo '<fieldset class="form-group"><div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'1', 'checked'=>TRUE);
-    echo 'On ' . form_radio($data);
+    echo form_radio($data) . 'Reserve Spot Enabled';
+    echo '</label></div>';
+    echo '<div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'0', 'checked'=>False);
-    echo 'Off ' . form_radio($data);
-    echo '<br>';
+    echo form_radio($data) . 'Reserve Spot Disabled';
+    echo '</label></div></fieldset>';
     echo form_submit('mysubmit', 'Create');
     echo '</div>';  
     }
     ?>
+    </form></div>
+    <div class="col-sm-4 text-center"></div></div>
+    </div></div>
 
-</form>
-</div></div></div>
-<div class='container'><div class='row'><div class="col-sm-2"></div></div></div>
 
     
     
