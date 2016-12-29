@@ -81,8 +81,11 @@ public function create_league(){
         return $league_users;
     }
 
-    public function get_open_public_leagues(){
-        $result = $this->db->select('open_public_leagues');
+    public function get_open_leagues(){
+        $user = $this->ion_auth->user()->row();
+        $sql = ('SELECT DISTINCT * FROM `v_open_leagues` ol JOIN t_teams t ON ol.league_id = t.league_id WHERE t.user_id NOT IN (?) GROUP BY ol.league_id');
+        $query = $this->db->query($sql, array($user->id));
+        return $query->result();
     }
 
     //this function made me realize that leagues will need to support mulitple commissioners and so the db needs to add the many to many table
