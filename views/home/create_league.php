@@ -14,9 +14,11 @@
     {
     ?>
     
-    <div class='container'><div class='row'><div class="col-sm-3"></div></div></div>
-    <div class='container'><div class='row'><div class="col-sm-6"><h1>Create A League</h1>
-    
+    <div class='container-fluid'>
+    <div class='row'>
+    <div class="col-sm-4 text-center"></div>
+    <div class="col-sm-4 text-center">
+    <h1>Create A League</h1>
     <?php
 
     //open form
@@ -65,7 +67,7 @@
     echo '<br>';
     echo '</div>';
     //Draft Date
-    echo '<div class="form-group">';
+    echo '<div class="form-group ">';
     $data = array('class'=>'form-control', 'id'=>'draft_date', 'name'=>'draft_date', 'value'=>set_value('draft_date'));
     echo '<label for="draft_date">Draft Date</label>';
     echo form_input($data);
@@ -125,10 +127,10 @@
     echo '</div>';  
     }
     ?>
+    </form></div>
+    <div class="col-sm-4 text-center"></div></div>
+    </div></div>
 
-</form>
-</div></div></div>
-<div class='container'><div class='row'><div class="col-sm-3"></div></div></div>
 
     
     

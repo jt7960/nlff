@@ -4,7 +4,9 @@
     </div>
     <div class='row'>
         <div class='col-md-6 text-center'><h2>Public Leagues</h2>
-        <table id='open_public_leagues'><tr><th>Teams</th><th>Draft Date/Time</th><th>Join</th></tr>
+        <div class='table-responsive'><table class='table' id='open_public_leagues'><tr><th>Teams</th><th>Draft Date/Time</th><th>Join</th></tr>
+
+        </table></div>
         <?php
 
         ?>

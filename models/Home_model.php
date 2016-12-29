@@ -63,8 +63,7 @@ public function create_league(){
 
    public function get_users_leagues($user_id){
         $leagues = array();
-        $sql = "SELECT l.league_name as league_name, l.league_id as league_id FROM t_leagues as l JOIN t_users_leagues as ul ON l.league_id = ul.league_id WHERE ul.league_id IN
-        (SELECT league_id FROM t_users_leagues WHERE user_id = ?)";
+        $sql = "SELECT l.league_id, l.league_name FROM t_leagues l JOIN t_teams t ON l.league_id = t.league_id WHERE t.user_id = ?";
         $query = $this->db->query($sql, array($user_id));
         foreach ($query->result_array() as $row){
             array_push($leagues, array($row['league_id'] => $row['league_name']));
@@ -74,7 +73,7 @@ public function create_league(){
 
     public function get_league_members($league_id){
         $league_users = array();
-        $sql = "SELECT user_id FROM t_users_leagues WHERE league_id = ?";
+        $sql = "SELECT user_id FROM t_teams WHERE league_id = ?";
         $result = $this->db->query($sql, array($league_id));
         foreach ($result as $user_id){
             array_push($league_users, $user_id);
@@ -90,7 +89,7 @@ public function create_league(){
     //also, the function to create a league needs to be modified to support this.
    public function get_league_commissioners($league_id){
         $league_commissioners = array();
-        $sql = "SELECT commissioner_id FROM t_leagues_commissioners WHERE league_id = ?";
+        $sql = "SELECT user_id FROM t_teams WHERE commissioner = '1' AND league_id = ?";
         $result = $this->db->query($sql, array($league_id));
         foreach($result as $commissioner){
             array_push($league_commissioners, $commissioner);
