@@ -82,10 +82,8 @@ public function create_league(){
         return $league_users;
     }
 
-    public function get_public_leagues(){
-        
-        //$current_epoch_time = get_date();
-        //$sql = "SELECT league_id, name, draft_date, no_teams FROM t_leagues WHERE draft_date > ? AND "
+    public function get_open_public_leagues(){
+        $result = $this->db->select('open_public_leagues');
     }
 
     //this function made me realize that leagues will need to support mulitple commissioners and so the db needs to add the many to many table

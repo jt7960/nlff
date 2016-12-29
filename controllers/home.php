@@ -68,6 +68,7 @@ class Home extends CI_Controller {
     }
 
     public function join_league(){
+        $data['title'] = 'Join A League';
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/home/join_league.php');
