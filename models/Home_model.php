@@ -90,8 +90,6 @@ public function create_league(){
         return $query->result();
     }
 
-    //this function made me realize that leagues will need to support mulitple commissioners and so the db needs to add the many to many table
-    //also, the function to create a league needs to be modified to support this.
    public function get_league_commissioners($league_id){
         $league_commissioners = array();
         $sql = "SELECT user_id FROM t_teams WHERE commissioner = '1' AND league_id = ?";
@@ -103,6 +101,7 @@ public function create_league(){
     }
 
     public function join_league($league_id, $password){
+        //look at generate_league_id() for a better way to do this.....
         $user = $this->ion_auth->user()->row();
         $sql = "SELECT COUNT(*) as leagues FROM t_leagues l JOIN t_teams t ON l.league_id = t.league_id WHERE l.league_id = ? AND l.password = ? AND user_id NOT IN (?)";
         $query = $this->db->query($sql, array($league_id, $password, $user->id));
