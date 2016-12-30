@@ -1,6 +1,6 @@
 <?php
     if($this->ion_auth->logged_in()){
-        $button_id = 'logOutBtn';
+        $button_id = 'logoutBtn';
         $button_string = 'Log Out';
         $data_toggle = '';
         $data_target = '';
@@ -34,7 +34,6 @@
                     <span id='user_status'><?php echo $welcome_string;?>
                     <?php
                         echo "<button type='button' class='btn btn-default btn-lg' id='".$button_id."' data-toggle='".$data_toggle."' data-target='".$data_target."'>".$button_string."</button>";
-                        //echo "<button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login</button>";
                     ?>
                     </span>
             </ul>

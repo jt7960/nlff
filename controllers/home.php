@@ -79,10 +79,8 @@ class Home extends CI_Controller {
     //MODALS
     public function register_user(){
         $data['title'] = 'Register';
-        
         $this->load->helper('form');
         $this->load->library('form_validation');
-        
         $this->form_validation->set_rules('user_password', 'Password', 'required');
         $this->form_validation->set_rules('verify_user_password', 'Verify Password', 'required|matches[user_password]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
