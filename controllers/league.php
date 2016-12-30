@@ -13,6 +13,10 @@ class League extends CI_Controller {
         $this->load->library('ion_auth');
     }
 
+    public function index(){
+        
+    }
+    
     public function home($id){
         $this->id = $id;
         //verify the user is in the league
