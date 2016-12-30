@@ -42,23 +42,14 @@ class Users extends CI_Controller {
     }
 
     public function register(){
-        $this->form_validation->set_message('username_check', 'The username ' . $username . 'is already taken');
+        echo validation_errors();
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
         $this->form_validation->set_rules('username', 'Username', 'callback_username_check');
-        $this->form_validation->set_message('email_check', 'The email address ' . $email . 'is already registered. Did you <a href="users/password_reset">forget your password?</a>');
+        
         if($this->form_validation->run() == FALSE){
             echo 'You probably left a field blank or something.';
-        }
-        else{
-            if($this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']) == FALSE){
-                echo validation_errors();
-            }
-            else{
-                echo 'true';
-                $this->ion_auth->login($_POST['username'], $_POST['password'], FALSE);
-            }
         }
     }
 
@@ -66,11 +57,11 @@ class Users extends CI_Controller {
         $this->db->where('username', $username);
         $this->db->from('users');
         if ($this->db->count_all_results() > 0){
-
+            $this->form_validation->set_message('username_check', 'The username ' . $_POST['username']. 'is already taken');
             return FALSE;
             }
-            else{
-                return TRUE;
+        else{
+            return TRUE;
             }
         }
 
@@ -78,6 +69,7 @@ class Users extends CI_Controller {
         $this->db->where('email', $email);
         $this->db->from('users');
         if ($this->db->count_all_results() > 0){
+            $this->form_validation->set_message('email_check', 'The email address ' . $_POST['email'] . 'is already registered. Did you <a href="users/password_reset">forget your password?</a>');
             return FALSE;
             }
             else{

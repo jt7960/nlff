@@ -11,22 +11,14 @@ class Home extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
-        
-        //$this->Home_model->test();
     }
+
     //Site Pages
     public function index(){
-        $data['leagues'] = array();
-        if($this->ion_auth->logged_in()){
-            $user = $this->ion_auth->user()->row();
-            $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
-        }
-        
-
+        $data['leagues'] = array();        
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
-        //echo $this->ion_auth->logged_in(); //uncomment to see if you are logged in.
         $this->load->view('/home/home.php');
         $this->load->view('/common/footer.php');
     }
