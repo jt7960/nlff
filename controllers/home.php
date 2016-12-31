@@ -118,7 +118,7 @@ class Home extends CI_Controller {
         $this->load->helper(array('form'));
         $this->load->library('form_validation');
         $this->form_validation->set_rules('user_password', 'Password', 'required');
-        $this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
+        //$this->form_validation->set_rules('user_email', 'User Email', 'required|valid_email');
         
         if($this->form_validation->run() == FALSE){
             $this->load->view('common/header.php', $data);

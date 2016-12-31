@@ -9,7 +9,7 @@
                     
                 </div>
                 <div class='warning text-center'>
-                    <span id='login_modal_status'></span>
+                    <span id='login_modal_status'><?php echo validation_errors();?></span>
                 </div>
                 <div class='modal-body' style='padding:40px 50px;'>
                         <div class='row'>
