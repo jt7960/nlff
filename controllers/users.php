@@ -6,7 +6,6 @@ class Users extends CI_Controller {
         parent::__construct();
         
         $this->load->model('Home_model');
-        $this->load->model('User_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -20,11 +19,11 @@ class Users extends CI_Controller {
     }
 
     public function login(){
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required', 'A password is required');
+        $this->form_validation->set_rules('username', 'Username', 'required', 'A username is required');
         //echo $_POST['remember_me'];
         if($this->form_validation->run() == FALSE){
-            echo 'You probably left a field blank or something.';
+
         }
         else{
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
@@ -42,11 +41,10 @@ class Users extends CI_Controller {
     }
 
     public function register(){
-        echo validation_errors();
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
-        $this->form_validation->set_rules('username', 'Username', 'callback_username_check');
+        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[12]|is_unique[users.username]');
         
         if($this->form_validation->run() == FALSE){
             echo 'You probably left a field blank or something.';
