@@ -10,7 +10,27 @@ class Home extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
-    }
+        $this->form_validation->set_rules('username', 'User Name', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        if($_POST){     
+            if($_POST['form_name'] == 'login'){
+                if($this->form_validation->run() == true){
+                    $this->ion_auth->login($_POST['username'], $_POST['password'], $_POST['remember_me']);
+                }
+            }
+            if($_POST['form_name'] == 'register'){
+                $this->form_validation->set_rules('verify', 'Verify Password', 'required|matches[password]');
+                $this->form_validation->set_rules('email', 'Email', 'required');
+                if($this->form_validation->run() == true){
+                    $this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email']);
+                    $this->ion_auth->login($_POST['username'], $_POST['password'], true);
+
+                }
+            }
+            }
+        }
+        
+    
 
     //Site Pages
     public function index(){

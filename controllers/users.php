@@ -29,12 +29,12 @@ class Users extends CI_Controller {
             if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
             if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
             $this->ion_auth->login($_POST['username'], $_POST['password'], $remember_me);
-            if($this->ion_auth->logged_in()){
+            /*if($this->ion_auth->logged_in()){
                 echo 'true';
             }
             else{
                 echo validation_errors();
-            }
+            }*/
 
             
         }
