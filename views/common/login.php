@@ -24,7 +24,8 @@
                                         <input type='password' class='form-control' name='password' id='password_field' placeholder='Enter Password'>
                                     </div>
                                     <div class='checkbox'>
-                                        <label><input id='remember_me' type='checkbox' name='remember_me' value='' checked>Remember me</label>
+                                        <input type='hidden' name='remember_me' value='FALSE'></input>
+                                        <label><input id='remember_me' type='checkbox' name='remember_me' value='TRUE' checked>Remember me</label>
                                     </div>
                                     <button type='submit' class='btn btn-default btn-success btn-block' name='form_name' value='login' id='login_submit' ><span class='glyphicon glyphicon-off'></span> Login</button>
                                 </form>

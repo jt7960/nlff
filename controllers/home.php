@@ -14,8 +14,15 @@ class Home extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'required');
         if($_POST){     
             if($_POST['form_name'] == 'login'){
+                //print_r($_POST);
                 if($this->form_validation->run() == true){
-                    $this->ion_auth->login($_POST['username'], $_POST['password'], $_POST['remember_me']);
+                    if ($_POST['remember_me'] == 'TRUE'){
+                        $remember_me = TRUE;
+                    }
+                    else{
+                        $remember_me = FALSE;
+                    }
+                    $this->ion_auth->login($_POST['username'], $_POST['password'], $remember_me);
                 }
             }
             if($_POST['form_name'] == 'register'){
