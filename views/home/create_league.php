@@ -26,7 +26,7 @@
     $user = $this->ion_auth->user()->row();
     $hidden = array('creator_id' => $user->id);
     echo form_open('home/create_league', $attributes, $hidden);
-    //Public or Private
+    //RADIO Public or Private
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
@@ -40,25 +40,25 @@
     echo '</label></div>';
     echo '</fieldset>';
     echo "<div id='private_league_div'>";
-    //league name
+    // INPUT league name
     echo '<div class="form-group">';
     $data = array('id'=> 'league_name_id', 'class'=> 'form-control', 'name'=>'league_name', 'value'=>set_value('league_name'));
     echo '<label for="league_name_id">League Name</label>';
     echo form_input($data);
     echo '</div>';
-    //Password
+    //INPUT/PASSWORD Password
     echo '<div class="form-group">';
     $data = array('id'=>'league_password_input', 'class'=> 'form-control', 'name'=>'league_password');
     echo '<label for="league_password_input">League Password:</label>' . form_password($data);
     echo '<br>';
     echo '</div>';
-    //Verify Password
+    //INPUT/PASSWORD Verify Password
     echo '<div class="form-group">';
     $data = array('id'=>'league_password_verify_input', 'class'=> 'form-control', 'name'=>'verify_league_password');
     echo '<label for="league_password_verify_input">Verify Password:</label> ' . form_password($data);
     echo '<br>';
     echo "</div></div>";
-    //Number of Teams
+    //SELECT Number of Teams
     echo '<div class="form-group">';
     $options = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
     $selected = array('12');
@@ -66,14 +66,14 @@
     echo "<label for='num_teams_select'>Number of Teams: <label>" . form_dropdown('num_teams', $options, $selected, $extra);
     echo '<br>';
     echo '</div>';
-    //Draft Date
+    //INPUT Draft Date
     echo '<div class="form-group ">';
     $data = array('class'=>'form-control', 'id'=>'draft_date', 'name'=>'draft_date', 'value'=>set_value('draft_date'));
     echo '<label for="draft_date">Draft Date</label>';
     echo form_input($data);
     echo '<br>';
     echo "</div>";
-    //Draft Time
+    //SELECT Draft Time
     echo '<div class="form-group">';
     $options = array();
     $extra = array('id' => 'draft_time','class' => 'form-control');
@@ -93,7 +93,7 @@
     echo '<br>';
     echo '</div>';
  
-    //buffs (please can we rename these?)
+    // RADIO buffs (please can we rename these?)
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';
     echo '<label class="form-check-label">';
@@ -106,7 +106,7 @@
     echo form_radio($data) . 'Buffs Off';
     echo '</label></div>';
     echo '</fieldset>';
-    //Roster Upgrades
+    // RADIO Roster Upgrades
     echo '<fieldset class="form-group"><div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'upgrades', 'value'=>'1', 'checked'=>TRUE);
     echo form_radio($data) . 'Roster Upgrades On';
@@ -114,7 +114,7 @@
     $data = array('id'=>'', 'class'=> '', 'name'=>'upgrades', 'value'=>'0', 'checked'=>False);
     echo form_radio($data) . 'Roster Upgrades Off';
     echo '</label></div></fieldset>';
-    //Reserve Spot
+    //RADIO Reserve Spot
     echo '<fieldset class="form-group"><div class="form-check"><label class="form-check-label">';
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'1', 'checked'=>TRUE);
     echo form_radio($data) . 'Reserve Spot Enabled';
@@ -123,6 +123,7 @@
     $data = array('id'=>'', 'class'=> '', 'name'=>'reserves', 'value'=>'0', 'checked'=>False);
     echo form_radio($data) . 'Reserve Spot Disabled';
     echo '</label></div></fieldset>';
+    //SUBMIT
     echo form_submit('mysubmit', 'Create');
     echo '</div>';  
     }

@@ -1,3 +1,23 @@
+<?php
+    if($this->ion_auth->logged_in()){
+        $button_id = 'logoutBtn';
+        $button_string = 'Log Out';
+        $data_toggle = '';
+        $data_target = '';
+        $user = $this->ion_auth->user()->row();
+        $username = $user->username;
+        $welcome_string = 'Welcome '.$username;
+    }
+    else{
+        $button_id = 'loginBtn';
+        $button_string = 'Log In';
+        $data_toggle = 'modal';
+        $data_target = '#loginModal';
+        $user = '';
+        $username = 'Guest';
+        $welcome_string = 'Welcome '.$username;
+    }
+?>
 
 <nav class="navbar navbar-default">
     <div class="container-fluid">
@@ -11,14 +31,9 @@
                 <li><a href="#">Link </a></li>
             </ul>        
             <ul class="nav navbar-nav navbar-right">
-                    <span id='user_status'>
+                    <span id='user_status'><?php echo $welcome_string;?>
                     <?php
-                    if($this->ion_auth->logged_in()){
-                        echo "<button type='button' class='btn btn-default btn-lg' id='logoutBtn'>Log Out</button>";
-                    }
-                    else{
-                        echo "<button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login</button>";
-                    }
+                        echo "<button type='button' class='btn btn-default btn-lg' id='".$button_id."' data-toggle='".$data_toggle."' data-target='".$data_target."'>".$button_string."</button>";
                     ?>
                     </span>
             </ul>

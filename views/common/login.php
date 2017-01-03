@@ -6,7 +6,6 @@
                 <div class='modal-header'>
                     <button type='button' class='close' data-dismiss='modal'>&times;</button>
                     <h4 style='color:red;'><span class='glyphicon glyphicon-lock'></span></h4>
-                    
                 </div>
                 <div class='warning text-center'>
                     <span id='login_modal_status'></span>
@@ -15,8 +14,8 @@
                         <div class='row'>
                             <div class='col-md-6'>
                                 <h3>Login</h3>
-                                <form role='form' method='post'>
-                                    <div class='form-group'>
+                                <form id='login_form' method='post'>
+                                    <div class='form-group' >
                                         <label for='username'><span class='glyphicon glyphicon-user'></span> Username</label>
                                         <input type='text' class='form-control' name='username' id='username_field' placeholder='Enter Username'>
                                     </div>
@@ -25,9 +24,10 @@
                                         <input type='password' class='form-control' name='password' id='password_field' placeholder='Enter Password'>
                                     </div>
                                     <div class='checkbox'>
-                                        <label><input id='remember_me' type='checkbox' name='remember_me' value='' checked>Remember me</label>
+                                        <input type='hidden' name='remember_me' value='FALSE'></input>
+                                        <label><input id='remember_me' type='checkbox' name='remember_me' value='TRUE' checked>Remember me</label>
                                     </div>
-                                    <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal' id='login_submit' ><span class='glyphicon glyphicon-off'></span> Login</button>
+                                    <button type='submit' class='btn btn-default btn-success btn-block' name='form_name' value='login' id='login_submit' ><span class='glyphicon glyphicon-off'></span> Login</button>
                                 </form>
                             </div>
                             <div class='col-md-6'  style='padding-left: 15px; border-left: 1px solid #ccc;'>
@@ -49,7 +49,7 @@
                                         <label for='verify_register_password'> Verify Password</label> 
                                         <input type='password' class='form-control' name='verify' id='verify_register_password'>
                                     </div>
-                                    <button type='submit' class='btn btn-default btn-success btn-block' data-dismiss='modal' id='register_submit' name='register'><span class='glyphicon glyphicon-plus'></span> Register</button>
+                                    <button type='submit' class='btn btn-default btn-success btn-block' name='form_name' value='register' id='register_submit' name='register'><span class='glyphicon glyphicon-plus'></span> Register</button>
                                 </form>
                             </div>
                         </div>
