@@ -42,12 +42,12 @@ class Users extends CI_Controller {
     }
 
     public function register(){
-        $this->form_validation->set_message('username_check', 'The username ' . $username . 'is already taken');
+        $this->form_validation->set_message('username_check', 'The username ' . $_POST['username'] . 'is already taken');
         $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
         $this->form_validation->set_rules('username', 'Username', 'callback_username_check');
-        $this->form_validation->set_message('email_check', 'The email address ' . $email . 'is already registered. Did you <a href="users/password_reset">forget your password?</a>');
+        $this->form_validation->set_message('email_check', 'The email address ' . $_POST['email'] . 'is already registered. Did you <a href="users/password_reset">forget your password?</a>');
         if($this->form_validation->run() == FALSE){
             echo 'You probably left a field blank or something.';
         }

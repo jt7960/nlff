@@ -1,3 +1,4 @@
+<?php echo validation_errors(); ?>
 <div id='register_modal'>
 <div id='register_modal_content'>
 <!--<span id='close_register_modal'>x</span><br>-->
