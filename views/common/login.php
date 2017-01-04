@@ -8,7 +8,7 @@
                     <h4 style='color:red;'><span class='glyphicon glyphicon-lock'></span></h4>
                 </div>
                 <div class='warning text-center'>
-                    <span id='login_modal_status'></span>
+                    <span id='login_modal_status'><?php echo validation_errors();?></span>
                 </div>
                 <div class='modal-body' style='padding:40px 50px;'>
                         <div class='row'>
@@ -40,6 +40,10 @@
                                     <div class='form-group'>
                                         <label for='email'><span class='glyphicon glyphicon-envelope'></span> Email</label> 
                                         <input type='text' class='form-control' name='email' id='register_email' placeholder='Enter Your Email'>
+                                    </div>
+                                    <div class='form-group'>
+                                        <label for='verify_email'>Verify Email</label> 
+                                        <input type='text' class='form-control' name='verify_email' id='verify_email' placeholder='Verify Your Email'>
                                     </div>
                                     <div class='form-group'>
                                         <label for='register_password'><span class='glyphicon glyphicon-eye-open'></span> Password</label>

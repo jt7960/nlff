@@ -90,6 +90,27 @@ public function create_league(){
         return $query->result();
     }
 
+    public function get_open_draft_positions($league_id){
+        $available_draft_positions = array();
+        $sql = "SELECT num_teams FROM t_leagues WHERE league_Id = ?";
+        $query = $this->db->query($sql, $league_id);
+        $results = $query->result();
+        $num_teams = $result[0]['num_teams'];
+        for($i = 1; $i<$num_teams; $i++){
+            $posible_draft_positions.push($i);
+        }
+
+        $taken_draft_positions = array();
+        $sql = "SELECT draft_position FROM t_teams WHERE league_id = ?";
+        $query = $this->db->query($sql, $league_id);
+        $results = $query->result();
+        foreach($results as $result){
+            $taken_draft_positions.push($result['draft_position']);
+        }
+
+        return array_diff($posible_draft_positions, $taken_draft_positions);
+    }
+
    public function get_league_commissioners($league_id){
         $league_commissioners = array();
         $sql = "SELECT user_id FROM t_teams WHERE commissioner = '1' AND league_id = ?";

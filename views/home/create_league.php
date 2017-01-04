@@ -25,7 +25,7 @@
     $attributes = array('id'=>'', 'class'=>'create_league_form', 'name'=>'form_create_league');
     $user = $this->ion_auth->user()->row();
     $hidden = array('creator_id' => $user->id);
-    echo form_open('home/create_league', $attributes, $hidden);
+    echo form_open('league/create_league', $attributes, $hidden);
     //RADIO Public or Private
     echo '<fieldset class="form-group">';
     echo '<div class="form-check">';

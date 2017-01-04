@@ -48,8 +48,8 @@
                 <div class='inside'>
                 <?php if($this->ion_auth->logged_in()): ?>
                     <div class='well' id='leagues-well'>
-                        <a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
-                        <a href='home/join_league' type='button' class='btn btn-primary btn-block'>Join A League</a>
+                        <a href='league/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
+                        <a href='league/open_leagues' type='button' class='btn btn-primary btn-block'>Join A League</a>
                     </div>
                 <?php else: ?>
                     <div class='well' id='leagues-well'>
