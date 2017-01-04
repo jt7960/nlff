@@ -8,7 +8,7 @@
         <div class='col-sm-4 text-center'>
         </div><!--end left gutter column-->
         <div class='col-sm-4 text-center'>
-            <h1>Form Goes In Here
+            <h1>Form Goes In Here</h1>
         </div><!--end form column-->
         <div class='col-sm-4 text-center'>
         </div><!--end right gutter column-->
