@@ -98,7 +98,8 @@ class League extends CI_Controller {
     }
 
     public function join_league($league_id){
-        $data['league_id'] = $league_id;
+        $data['title'] = 'Join League';
+        $league_data['league_id'] = $league_id;
         if($_POST){
             $team_name = $_POST['team_name'];
             $draft_position = $_POST['draft_position'];
@@ -107,7 +108,7 @@ class League extends CI_Controller {
         }
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
-        $this->load->view('/league/join_league.php');
+        $this->load->view('/league/join_league.php', $league_data);
         $this->load->view('/common/footer.php');
     }
 
