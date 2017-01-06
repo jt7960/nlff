@@ -50,11 +50,25 @@ class League_model extends CI_Model{
         return $query->row();
     }
     public function join_league($array){
-        //some code
+        //print_r($array);
+        //first query to be sure if the draft position is still available
+        $where_array = array('league_id'=>$array['league_id'], 'draft_position'=>$array['draft_position']);
+        $this->db->where($where_array);
+        $number = $this->db->count_all_results('t_teams');
+        echo $number; 
+        if($number > 0){
+            return array(false, 'The draft position was already chosen for this league, try again');
+        }
+        //create record for the new team in the league in the db
+        $sql = 'INSERT INTO t_teams (user_id, league_id, team_name, draft_position, commissioner, team_icon) VALUES (?,?,?,?,?,?)';
+        if($this->db->query($sql, array($array['user_id'], $array['league_id'], $array['team_name'], $array['draft_position'], '0', $array['team_icon'])) ==false){
+            return array(false, "Not exactly sure what happened, but I failed to join the league. My bad, try again.");    
+        }
+        return array(true, "Welcome to League: " . $array['league_id']);
+
+
+
     }
-
-
-
 }
 
 ?>

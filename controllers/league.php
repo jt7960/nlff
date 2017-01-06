@@ -93,11 +93,17 @@ class League extends CI_Controller {
         $this->load->view('/common/footer.php');
     }
     public function join_league($league_id){
+        $data['title'] = 'Join League';
+        $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($league_id);
+        $data['error_message'] = '';
+        $league_data['league_data'] = $this->League_model->get_league_data($league_id);
+        $user = $this->ion_auth->user()->row();
+        
+        
         if($_POST){
-            $this->form_validation->set_rules('team_name', 'Team Name', 'required');
-            $team_name = $_POST['team_name'];
-            $draft_postition = $_POST['draft_position'];
-            $team_icon = $_POST['team_icon'];
+            //form validation
+            $this->form_validation->set_rules('team_name', 'Team Name', 'required');       
+
             if($this->form_validation->run() == FALSE){
                 $this->load->view('/common/header.php', $data);
                 $this->load->view('/common/title_bar.php');
@@ -105,14 +111,46 @@ class League extends CI_Controller {
                 $this->load->view('/common/footer.php');
             }
             else{
-                $this->League_model->join_league($_POST);
-                redirect('/league/home/'.$league_id, 'refresh');
+                //turn post into variables
+                $team_name = $_POST['team_name'];
+                $draft_position = $_POST['draft_position'];
+                //handle the team icon upload
+                if($_FILES['team_icon']['size'] !== 0){
+                    $upload_status = $this->upload_team_icon($_FILES);
+                }
+                else{
+                    $upload_status = array(true, '');
+                }
+                
+                if($upload_status[0] == false){
+                    $this->load->view('/common/header.php', $data);
+                    $this->load->view('/common/title_bar.php');
+                    $this->load->view('/league/join_league.php', $league_data);
+                    $this->load->view('/common/footer.php');
+                }
+                else{
+                //put the variables into an array to send to the model  
+                $join_data_array['league_id'] = $league_id;
+                $join_data_array['team_name'] = $team_name;
+                $join_data_array['draft_position'] = $draft_position;
+                $join_data_array['team_icon'] = $upload_status[1];
+                $join_data_array['user_id'] = $user->id;
+                //print_r($join_data_array);
+                $join_league_status = $this->League_model->join_league($join_data_array);
+                    if($join_league_status[0] == true ){
+                    redirect('/league/home/'.$league_id, 'refresh');
+                    }
+                    else{
+                    $league_data['error message'] = $join_league_status[1];
+                    $this->load->view('/common/header.php', $data);
+                    $this->load->view('/common/title_bar.php');
+                    $this->load->view('/league/join_league.php', $league_data);
+                    $this->load->view('/common/footer.php');
+                    }
+                }
             }
         }
         else{
-            $data['title'] = 'Join League';
-            $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($league_id);
-            $league_data['league_data'] = $this->League_model->get_league_data($league_id);
             $this->load->view('/common/header.php', $data);
             $this->load->view('/common/title_bar.php');
             $this->load->view('/league/join_league.php', $league_data);
@@ -132,4 +170,52 @@ class League extends CI_Controller {
         }
         
     }
-}
+    private function upload_team_icon($file){
+        $target_dir = "uploads/team_icons/";
+        $target_file = $target_dir . basename($file["team_icon"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($file["team_icon"]["tmp_name"]);
+        if($check !== false){
+            //echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } 
+        else{
+            $message = "File is not an image.";
+            $uploadOk = 0;
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            $message = "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+        // Check file size
+        if ($file["team_icon"]["size"] > 500000) {
+            $message = "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+            $message =  "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            return array(false, "Sorry, your file was not uploaded." . $message);
+        // if everything is ok, try to upload file
+        }
+        else{
+            if (move_uploaded_file($file["team_icon"]["tmp_name"], $target_file)){
+                $message =  "The file ". basename( $file["team_icon"]["name"]). " has been uploaded.";
+                return array(true, $target_file);
+            }
+            else{
+                return array(false, "Sorry, there was an error uploading your file.");
+            }
+        }
+    }
+
+
+}//end of class

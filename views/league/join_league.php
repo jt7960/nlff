@@ -1,6 +1,7 @@
 <div class='container'>
     <div class='row'>
         <div class='col-sm-12 text-center'>
+            <h1><?php echo $error_message; ?></h1>
             <h1>Join League</h1><h6>League ID: <?php echo $league_data->league_id; ?></h6>
         </div><!--end h1 column-->
     </div><!--end h1 row-->
@@ -9,8 +10,8 @@
         </div><!--end left gutter column-->
         <div class='col-sm-4 text-center'>
             <?php
-                $attributes = array('enctype'=>'multipart/form-data');
-                echo form_open_multipart('league/join_league', $attributes); 
+                $attributes = array('name'=>'join_league_form', 'enctype'=>'multipart/form-data');
+                echo form_open_multipart('league/join_league/'.$league_data->league_id, $attributes); 
             ?>
             <div class='form-group'>
                 <label for='team_name'>Team Name</label>
@@ -35,11 +36,16 @@
             </div>
             <div class='form-group'>
                 <?php
-                    $data = array('id'=>'submit_join_league', 'class'=>'btn-default', 'value'=>true);
-                    echo form_button('submit_join_league', 'Submit', $data);
+                    //$data = array('id'=>'submit_join_league', 'class'=>'btn-default', 'form'=>'join_league_form', 'type'=>'submit');
+                    //echo form_submit('submit_join_league', 'Submit', $data);
                 ?>
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
+            
         </div> <!-- end form-group-->
+        <?php
+            echo form_close();
+        ?>
 
 
 
