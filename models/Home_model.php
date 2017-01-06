@@ -8,61 +8,54 @@ class Home_model extends CI_Model{
                 $this->load->database();
         }
 
-public function create_team($array){
-    $this->db->insert('t_teams', $array);
-} 
-
-public function test(){
     
-}
-
-public function generate_public_team_name(){
-    $adjective = array('terrible', 'horrible', 'awful', 'smelly', 'yucky', 'awesome', 'holy');
-    $verb = array('farting', 'clamoring', 'barfing', 'losing');
-    $noun = array('suckers', 'idiots', 'losers', 'winners', 'fantasizers');
-    //logic to pick one of each, concatonate the 3, and return the result.
-}
-
-public function generate_league_id(){
-    while(true){
-        $league_id = rand(10000000000, 99999999999);
-        $this->db->where('league_id', $league_id);
-        if ($this->db->count_all_results('t_leagues') == 0){
-            return $league_id;
-            }
-        }
-}
-
-public function create_league(){
-    //this array is the data that will be used to create the league
-    $league_data = array(
-    'league_id' => $this->generate_league_id(),
-    'creator_id' => $this->input->post('creator_id'),
-    'league_name' => $this->input->post('league_name'),
-    'password' => $this->input->post('league_password'),
-    'buffs' => $this->input->post('buffs'),
-    'upgrades' => $this->input->post('upgrades'),
-    'reserves' => $this->input->post('reserves'),
-    'public' => $this->input->post('public'),
-    'num_teams' => $this->input->post('num_teams'),
-    'draft_date'=> strtotime($this->input->post('draft_date') . " " . $this->input->post('draft_time') . ' GMT')
+    public function create_team($array){
+        $this->db->insert('t_teams', $array);
+    }
+    public function generate_public_team_name(){
+        $adjective = array('terrible', 'horrible', 'awful', 'smelly', 'yucky', 'awesome', 'holy');
+        $verb = array('farting', 'clamoring', 'barfing', 'losing');
+        $noun = array('suckers', 'idiots', 'losers', 'winners', 'fantasizers');
+        //logic to pick one of each, concatonate the 3, and return the result.
+    }
+    public function generate_league_id(){
+        while(true){
+            $league_id = rand(10000000000, 99999999999);
+            $this->db->where('league_id', $league_id);
+            if ($this->db->count_all_results('t_leagues') == 0){
+                return $league_id;
+                    }
+                }
+    }
+    public function create_league(){
+        //this array is the data that will be used to create the league
+        $league_data = array(
+        'league_id' => $this->generate_league_id(),
+        'creator_id' => $this->input->post('creator_id'),
+        'league_name' => $this->input->post('league_name'),
+        'password' => $this->input->post('league_password'),
+        'buffs' => $this->input->post('buffs'),
+        'upgrades' => $this->input->post('upgrades'),
+        'reserves' => $this->input->post('reserves'),
+        'public' => $this->input->post('public'),
+        'num_teams' => $this->input->post('num_teams'),
+        'draft_date'=> strtotime($this->input->post('draft_date') . " " . $this->input->post('draft_time') . ' GMT')
+            );
+        //this array is the data for the t_team insert
+        $team_data = array(
+        'user_id' =>$league_data['creator_id'],
+        'team_name' => 'unnamed team',
+        'league_id' => $league_data['league_id'],
+        'draft_position' => '1',
+        'commissioner' => '1'
         );
-    //this array is the data for the t_team insert
-    $team_data = array(
-    'user_id' =>$league_data['creator_id'],
-    'team_name' => 'unnamed team',
-    'league_id' => $league_data['league_id'],
-    'draft_position' => '1',
-    'commissioner' => '1'
-    );
-    //create the t_league record
-    $this->db->insert('t_leagues', $league_data);
-    //create the t_team record
-    $this->create_team($team_data);
-    return $league_data['league_id'];
-}
-
-   public function get_users_leagues($user_id){
+        //create the t_league record
+        $this->db->insert('t_leagues', $league_data);
+        //create the t_team record
+        $this->create_team($team_data);
+        return $league_data['league_id'];
+    }
+    public function get_users_leagues($user_id){
         $leagues = array();
         $sql = "SELECT l.league_id, l.league_name FROM t_leagues l JOIN t_teams t ON l.league_id = t.league_id WHERE t.user_id = ?";
         $query = $this->db->query($sql, array($user_id));
@@ -70,18 +63,7 @@ public function create_league(){
             array_push($leagues, array($row['league_id'] => $row['league_name']));
         }
         return $leagues;
-        }
-
-    public function get_league_members($league_id){
-        $league_users = array();
-        $sql = "SELECT user_id FROM t_teams WHERE league_id = ?";
-        $result = $this->db->query($sql, array($league_id));
-        foreach ($result as $user_id){
-            array_push($league_users, $user_id);
-        }
-        return $league_users;
     }
-
     public function get_open_leagues(){
         $user = $this->ion_auth->user()->row();
         $now = time();
@@ -89,38 +71,6 @@ public function create_league(){
         $query = $this->db->query($sql, array($user->id));
         return $query->result();
     }
-
-    public function get_open_draft_positions($league_id){
-        $available_draft_positions = array();
-        $sql = "SELECT num_teams FROM t_leagues WHERE league_Id = ?";
-        $query = $this->db->query($sql, $league_id);
-        $results = $query->result();
-        $num_teams = $result[0]['num_teams'];
-        for($i = 1; $i<$num_teams; $i++){
-            $posible_draft_positions.push($i);
-        }
-
-        $taken_draft_positions = array();
-        $sql = "SELECT draft_position FROM t_teams WHERE league_id = ?";
-        $query = $this->db->query($sql, $league_id);
-        $results = $query->result();
-        foreach($results as $result){
-            $taken_draft_positions.push($result['draft_position']);
-        }
-
-        return array_diff($posible_draft_positions, $taken_draft_positions);
-    }
-
-   public function get_league_commissioners($league_id){
-        $league_commissioners = array();
-        $sql = "SELECT user_id FROM t_teams WHERE commissioner = '1' AND league_id = ?";
-        $result = $this->db->query($sql, array($league_id));
-        foreach($result as $commissioner){
-            array_push($league_commissioners, $commissioner);
-        }
-        return $league_commissioners;
-    }
-
     public function join_league($league_id, $password){
         //look at generate_league_id() for a better way to do this.....
         $user = $this->ion_auth->user()->row();

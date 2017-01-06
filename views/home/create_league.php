@@ -61,9 +61,8 @@
     //SELECT Number of Teams
     echo '<div class="form-group">';
     $options = array('8'=>'8 teams', '10'=>'10 teams', '12'=>'12 teams', '14'=>'14 teams', '16'=>'16 teams');
-    $selected = array('12');
-    $extra = array('class'=>'custom-select', 'id'=>'num_teams_select');
-    echo "<label for='num_teams_select'>Number of Teams: <label>" . form_dropdown('num_teams', $options, $selected, $extra);
+    $extra = array('class'=>'form-control', 'id'=>'num_teams_select');
+    echo "<label for='num_teams_select'>Number of Teams: </label>" . form_dropdown('num_teams', $options, '12', $extra);
     echo '<br>';
     echo '</div>';
     //INPUT Draft Date
@@ -77,8 +76,8 @@
     echo '<div class="form-group">';
     $options = array();
     $extra = array('id' => 'draft_time','class' => 'form-control');
-    $selected = array();
-    $extra = array('class'=>'custom-select', 'id'=>'draft_time');
+    $selected = '5:00 pm';
+    $extra = array('class'=>'form-control', 'id'=>'draft_time');
     $hours = array('12','1','2','3','4','5','6','7','8','9','10','11');
     $minutes = array('00','15','30','45');
     $ampm = array('am','pm');

@@ -5,25 +5,23 @@ class League extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('Home_model');
+        $this->load->model('League_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
     }
-
     public function index(){
-        
+        //some code;
     }
-    
     public function home($id){
         $this->id = $id;
         //verify the user is in the league
-            $league_users = $this->Home_model->get_league_members($id);
+            $league_users = $this->League_model->get_league_members($id);
         //check if the user is the commish
-            $league_commissioners = $this->Home_model->get_league_commissioners($id);
+            $league_commissioners = $this->League_model->get_league_commissioners($id);
     }
-
     public function players(){
         $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
@@ -43,7 +41,6 @@ class League extends CI_Controller {
         $this->load->view('/league/players.php', $data);
         $this->load->view('/common/footer.php');
     }
-
     public function create_league(){
         $data['title'] = 'Create a New League';
         
@@ -79,13 +76,12 @@ class League extends CI_Controller {
             $this->load->view('common/footer.php');
             }   
     }
-
     public function open_leagues(){
         if($_POST){
             //print_r($_POST);
             $league_id = $_POST['league_id'];
             $league_password = $_POST['league_password'];
-            $matching_leagues = $this->Home_model->join_league($league_id, $league_password);
+            $matching_leagues = $this->League_model->join_league($league_id, $league_password);
             echo $matching_leagues;
 
             }
@@ -96,23 +92,34 @@ class League extends CI_Controller {
         $this->load->view('/home/open_leagues.php');
         $this->load->view('/common/footer.php');
     }
-
     public function join_league($league_id){
-        $data['title'] = 'Join League';
-        $league_data['league_id'] = $league_id;
         if($_POST){
+            $this->form_validation->set_rules('team_name', 'Team Name', 'required');
             $team_name = $_POST['team_name'];
-            $draft_position = $_POST['draft_position'];
+            $draft_postition = $_POST['draft_position'];
             $team_icon = $_POST['team_icon'];
-            
+            if($this->form_validation->run() == FALSE){
+                $this->load->view('/common/header.php', $data);
+                $this->load->view('/common/title_bar.php');
+                $this->load->view('/league/join_league.php', $league_data);
+                $this->load->view('/common/footer.php');
+            }
+            else{
+                $this->League_model->join_league($_POST);
+                redirect('/league/home/'.$league_id, 'refresh');
+            }
         }
-        $this->load->view('/common/header.php', $data);
-        $this->load->view('/common/title_bar.php');
-        $this->load->view('/league/join_league.php', $league_data);
-        $this->load->view('/common/footer.php');
+        else{
+            $data['title'] = 'Join League';
+            $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($league_id);
+            $league_data['league_data'] = $this->League_model->get_league_data($league_id);
+            $this->load->view('/common/header.php', $data);
+            $this->load->view('/common/title_bar.php');
+            $this->load->view('/league/join_league.php', $league_data);
+            $this->load->view('/common/footer.php');
+        }   
     }
-
-    public function draft_date_is_in_the_future($draft_date){
+    private function draft_date_is_in_the_future($draft_date){
         $now = getdate();
         $timestamp = strtotime($draft_date);
         if($timestamp < $now[0]){
