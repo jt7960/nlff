@@ -2,7 +2,7 @@ $(document).ready(function(){
 
     //logout function
     $('body').on('click', '#logoutBtn', function(){
-        console.log('hello');
+        //console.log('hello');
         var data = {};
         $.post('../users/logout', data, function(){
             window.location.replace("/");

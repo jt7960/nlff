@@ -67,7 +67,7 @@ class Home_model extends CI_Model{
     public function get_open_leagues(){
         $user = $this->ion_auth->user()->row();
         $now = time();
-        $sql = ('SELECT DISTINCT * FROM `v_open_leagues` ol JOIN t_teams t ON ol.league_id = t.league_id WHERE t.user_id NOT IN (?) AND ol.draft_date > "'.$now.'" GROUP BY ol.league_id');
+        $sql = ('SELECT * FROM `v_open_leagues` ol JOIN t_teams t ON ol.league_id = t.league_id WHERE t.user_id NOT IN (?) AND ol.draft_date > "'.$now.'" GROUP BY ol.league_id');
         $query = $this->db->query($sql, array($user->id));
         return $query->result();
     }

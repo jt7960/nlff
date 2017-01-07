@@ -157,7 +157,7 @@ class League extends CI_Controller {
             $this->load->view('/common/footer.php');
         }   
     }
-    private function draft_date_is_in_the_future($draft_date){
+    public function draft_date_is_in_the_future($draft_date){
         $now = getdate();
         $timestamp = strtotime($draft_date);
         if($timestamp < $now[0]){

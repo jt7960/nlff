@@ -14,7 +14,7 @@
         <?php
             foreach($open_leagues as $open_league){
                 $date = date(DATE_COOKIE, $open_league->draft_date);
-                echo '<tr><td>'.$open_league->league_id.'</td><td>'.$open_league->cur_teams.'/'.$open_league->num_teams.'</td><td>'.$date.'</td><td><a href="join_league/'.$open_league->league_id.'">Join Link</a></td></tr>';
+                echo '<tr><td>'.$open_league->league_id.'</td><td>'.$open_league->cur_num_teams.'/'.$open_league->num_teams.'</td><td>'.$date.'</td><td><a href="join_league/'.$open_league->league_id.'">Join Link</a></td></tr>';
             }
             //print_r($open_leagues);
         ?>
