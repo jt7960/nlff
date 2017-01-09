@@ -11,7 +11,7 @@
         <div class='col-sm-4 text-center'>
             <?php
                 $attributes = array('name'=>'join_league_form', 'enctype'=>'multipart/form-data');
-                echo form_open_multipart('league/join_league/'.$league_data->league_id, $attributes); 
+                echo form_open_multipart('home/join_league/'.$league_data->league_id, $attributes); 
             ?>
             <div class='form-group'>
                 <label for='team_name'>Team Name</label>

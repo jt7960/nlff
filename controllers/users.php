@@ -19,36 +19,40 @@ class Users extends CI_Controller {
     }
 
     public function login(){
-        $this->form_validation->set_rules('password', 'Password', 'required', 'A password is required');
-        $this->form_validation->set_rules('username', 'Username', 'required', 'A username is required');
-        //echo $_POST['remember_me'];
-        if($this->form_validation->run() == FALSE){
-
-        }
-        else{
-            if($_POST['remember_me'] == 'true'){$remember_me = TRUE;}
-            if($_POST['remember_me'] == 'false'){$remember_me =  FALSE;}
-            $this->ion_auth->login($_POST['username'], $_POST['password'], $remember_me);
-            /*if($this->ion_auth->logged_in()){
-                echo 'true';
+        $this->form_validation->set_rules('username', 'User Name', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        if($this->form_validation->run() == true){
+                /*if ($_POST['remember_me'] == 'TRUE'){
+                    $remember_me = TRUE;
+                }
+                else{
+                    $remember_me = FALSE;
+                }*/
+                $this->ion_auth->login($_POST['username'], $_POST['password'], $_POST['remember_me']);
             }
-            else{
-                echo validation_errors();
-            }*/
-
-            
+        if(!$this->ion_auth->logged_in()){
+            echo validation_errors();
         }
     }
 
     public function register(){
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('verify', 'Password Confirmation', 'required|matches[password]');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_email_check');
-        $this->form_validation->set_rules('username', 'Username', 'required|min_length[5]|max_length[12]|is_unique[users.username]');
-
-        if($this->form_validation->run() == FALSE){
-            echo 'You probably left a field blank or something.';
+        $this->form_validation->set_rules('password','Password', 'required');
+        $this->form_validation->set_rules('verify_password', 'Verify Password', 'required|matches[password]');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('verify_email', 'Verify Email', 'required|matches[email]');
+        if($this->form_validation->run() == false){
+            echo validation_errors();
         }
+        else{
+            if(!$this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email'])){
+                echo $this->db->error_message();
+            }
+            if(!$this->ion_auth->login($_POST['username'], $_POST['password'], true)){
+                echo $this->db->error_message();
+            }
+            echo validation_errors();   
+        }
+        
     }
 
     public function username_check($username){
