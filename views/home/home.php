@@ -51,22 +51,22 @@
                         <a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
                         <a href='home/open_leagues' type='button' class='btn btn-primary btn-block'>Join A League</a>
                     </div>
-                <?php else: ?>
-                    <div class='well' id='leagues-well'>
-                        <button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>
-                    </div>
-                    <?php endif; ?>
                 </div>
-                <div id="public_leagues_div">
                 <h1>My Leagues</h1>
+                <div class='well' id='my_leagues'>
                 <?php
-                //print_r($leagues as $id => $name);
-
                 foreach ($leagues as $league){
                     foreach($league as $id => $name){
                     echo "<a href='league/".$id."/home/'>".$name. "</a><br>";
                 }}
                 ?>
+                <?php else: ?>
+                    <div class='well' id='leagues-well'>
+                        <button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>
+                    </div>
+                    <?php endif; ?>
+                
+
                 </div><!--end ofpublic leagues div-->
             </div>
         </div>

@@ -2,7 +2,8 @@
     <div class='row'>
         <div class='col-sm-12 text-center'>
             <h1>Join A League</h1>
-            <h6 id='warning'></h6>
+            <h6 id='warning'><?php echo $error; ?></h6>
+            <h6 id='warning'><?php echo validation_errors(); ?></h6>
         </div>
     </div>
     <div class='row'>
@@ -19,7 +20,7 @@
                 <td>'.$open_league->league_id.'</td>
                 <td>'.$open_league->cur_teams.'/'.$open_league->num_teams.'</td>
                 <td>'.$date.'</td>
-                <td><a href="/home/join_league/'.$open_league->league_id.'">Join Link</a></td>
+                <td><a href="/home/join_public_league/'.$open_league->league_id.'">Join Link</a></td>
                 </tr>';
             }
             //print_r($open_leagues);
@@ -35,7 +36,7 @@
         <?php
             //open form
             $attributes = array('id'=>'', 'class'=>'', 'name'=>'');
-            echo form_open('home/join_league', $attributes);
+            echo form_open('/home/open_leagues', $attributes);
 
             //league ID
             echo '<div class="form-group">';
@@ -53,7 +54,7 @@
             
             //SUBMIT
             
-            echo form_submit(array('name'=>'join_public_league_submit', 'value'=>'Join', 'id'=>'join_private_league_submit'));
+            echo form_submit('mysubmit', 'Join');
         ?>
             </form>
         </div>

@@ -49,7 +49,7 @@ class League_model extends CI_Model{
         $query = $this->db->query($sql, $league_id);
         return $query->row();
     }
-    public function join_league($array){
+    public function join_public_league($array){
         //print_r($array);
         //first query to be sure if the draft position is still available
         $where_array = array('league_id'=>$array['league_id'], 'draft_position'=>$array['draft_position']);
@@ -68,6 +68,21 @@ class League_model extends CI_Model{
 
 
 
+    }
+    public function join_private_league($array){
+        $sql = 'INSERT INTO t_teams (user_id, league_id, team_name, draft_position, commissioner) VALUES (?,?,?,?,?)';
+        return ($this->db->query($sql, array($array['user_id'], $array['league_id'], 'unnamed team', $array['draft_position'], '0')));
+    }
+    public function check_private_league_credentials($array){
+        $league_id = $array['league_id'];
+        $password = $array['password'];
+        $this->db->where(array('league_id'=>$league_id, 'password'=>$password));
+        if($this->db->count_all_results('t_leagues') == '1'){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }
 

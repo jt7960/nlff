@@ -5,6 +5,7 @@ class Home extends CI_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model('Home_model');
+        $this->load->model('League_model');
         $this->load->helper('url');
         $this->load->helper('form');
         $this->load->library('form_validation');
@@ -14,7 +15,11 @@ class Home extends CI_Controller {
         
     //Site Pages
     public function index(){
-        $data['leagues'] = array();        
+        $data['leagues'] = array();
+        if($this->ion_auth->logged_in()){
+            $user = $this->ion_auth->user()->row();
+            $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
+        }
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/common/login.php');
@@ -22,16 +27,26 @@ class Home extends CI_Controller {
         $this->load->view('/common/footer.php');
     }
     public function open_leagues(){
-        if($_POST){
-            //print_r($_POST);
-            $league_id = $_POST['league_id'];
-            $league_password = $_POST['league_password'];
-            $matching_leagues = $this->League_model->join_league($league_id, $league_password);
-            echo $matching_leagues;
-
-            }
+        $user = $this->ion_auth->user()->row();
+        $user_id = $user->id;
         $data['title'] = 'Join A League';
         $data['open_leagues'] = $this->Home_model->get_open_leagues();
+        $data['error'] = '';
+        if($_POST){
+            $league_id = $_POST['league_id'];
+            $password = $_POST['league_password'];
+            $this->form_validation->set_rules('league_id', 'League ID', 'required');
+            $this->form_validation->set_rules('league_password', 'Password', 'required');
+            if($this->form_validation->run() == true){
+                if($this->League_model->check_private_league_credentials(array('league_id'=>$league_id, 'password'=>$password))){
+                    $this->League_model->join_private_league(array('user_id'=>$user->id, 'league_id'=>$league_id, 'draft_position'=>'0'));
+                    redirect('/league/'.$league_id);
+                }
+                else{
+                    $data['error']= 'failed to join league';
+                }
+            }
+        }
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
         $this->load->view('/home/open_leagues.php');
@@ -69,15 +84,13 @@ class Home extends CI_Controller {
             $this->load->view('common/footer.php');
             }   
     }
-    public function join_league($league_id){
-        $this->load->model('League_model');
+    public function join_public_league($league_id){
         $data['title'] = 'Join League';
         $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($league_id);
         $data['error_message'] = '';
         $league_data['league_data'] = $this->League_model->get_league_data($league_id);
         $user = $this->ion_auth->user()->row();
-        
-        
+        $user_id = $user->id;
         if($_POST){
             //form validation
             $this->form_validation->set_rules('team_name', 'Team Name', 'required');       
@@ -116,7 +129,7 @@ class Home extends CI_Controller {
                 //print_r($join_data_array);
                 $join_league_status = $this->League_model->join_league($join_data_array);
                     if($join_league_status[0] == true ){
-                    redirect('/league/home/'.$league_id, 'refresh');
+                    redirect('/league/'.$league_id, 'refresh');
                     }
                     else{
                     $league_data['error message'] = $join_league_status[1];
@@ -135,20 +148,6 @@ class Home extends CI_Controller {
             $this->load->view('/common/footer.php');
         }   
     }
-    public function join_private_league(){
-        if($_POST){
-            $this->db->where(array('league_id'=>$_POST['league_id'], 'password'=>$_POST['password']));
-            if($this->db->count_all_results('t_leagues') !== 1){
-                echo 'Bad league ID or password.';
-            }
-        }
-        else{
-            echo 'what teh heck juss hpnd?';
-            //redirect('/', 'refresh');
-        }
-    }
-
-
     //form validation
     public function draft_date_is_in_the_future($draft_date){
         $now = getdate();
@@ -163,7 +162,18 @@ class Home extends CI_Controller {
         }
         
     }
-    
+    //other functions
+    private function league_is_public($league_id){
+        $sql = "SELECT public from t_leagues WHERE league_id = ?";
+        $query = $this->db->query($sql, $league_id);
+        $row = $query->row();
+        if($row->public == '1'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 
 }
