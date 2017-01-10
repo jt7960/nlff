@@ -44,4 +44,20 @@ $(document).ready(function(){
         })
     });
 
+    $('body').on('click', '#join_private_league_submit', function(e){
+        e.preventDefault();
+        var league_id = $('#league_id_input').val();
+        var password = $('#league_password_input').val();
+        var data = {'league_id':league_id_input,'password':league_password_input};
+        $.post('/home/join_private_league', data, function(status){
+            if(status != ''){
+                window.location.replace('/home/join_league/'+league_id);
+            }
+            else{
+                $('#warning').html(status);
+            }
+        });  
+    });
+
+
 }); //end document.ready()

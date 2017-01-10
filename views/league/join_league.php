@@ -39,7 +39,7 @@
                     //$data = array('id'=>'submit_join_league', 'class'=>'btn-default', 'form'=>'join_league_form', 'type'=>'submit');
                     //echo form_submit('submit_join_league', 'Submit', $data);
                 ?>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit"  class="btn btn-primary">Submit</button>
             </div>
             
         </div> <!-- end form-group-->

@@ -2,6 +2,7 @@
     <div class='row'>
         <div class='col-sm-12 text-center'>
             <h1>Join A League</h1>
+            <h6 id='warning'></h6>
         </div>
     </div>
     <div class='row'>
@@ -51,7 +52,8 @@
             echo '</div>';
             
             //SUBMIT
-            echo form_submit('join_public_league_submit', 'Join');
+            
+            echo form_submit(array('name'=>'join_public_league_submit', 'value'=>'Join', 'id'=>'join_private_league_submit'));
         ?>
             </form>
         </div>

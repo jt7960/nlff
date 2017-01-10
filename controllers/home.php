@@ -135,10 +135,35 @@ class Home extends CI_Controller {
             $this->load->view('/common/footer.php');
         }   
     }
-
+    public function join_private_league(){
+        if($_POST){
+            $this->db->where(array('league_id'=>$_POST['league_id'], 'password'=>$_POST['password']));
+            if($this->db->count_all_results('t_leagues') !== 1){
+                echo 'Bad league ID or password.';
+            }
+        }
+        else{
+            echo 'what teh heck juss hpnd?';
+            //redirect('/', 'refresh');
+        }
+    }
 
 
     //form validation
+    public function draft_date_is_in_the_future($draft_date){
+        $now = getdate();
+        $timestamp = strtotime($draft_date);
+        if($timestamp < $now[0]){
+            $this->form_validation->set_message('draft_date_is_in_the_future', 'Draft Date must be in the future');
+            return false;
+        }
+        //another condition should go here to verify the draft date is within the range of valid draft dates for a given season
+        else{
+            return true;
+        }
+        
+    }
+    
 
 
 }

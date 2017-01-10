@@ -22,17 +22,12 @@ class Users extends CI_Controller {
         $this->form_validation->set_rules('username', 'User Name', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         if($this->form_validation->run() == true){
-                /*if ($_POST['remember_me'] == 'TRUE'){
-                    $remember_me = TRUE;
-                }
-                else{
-                    $remember_me = FALSE;
-                }*/
                 $this->ion_auth->login($_POST['username'], $_POST['password'], $_POST['remember_me']);
             }
         if(!$this->ion_auth->logged_in()){
-            echo validation_errors();
+            echo 'incorrect username and/or password';
         }
+        echo validation_errors();
     }
 
     public function register(){
@@ -45,14 +40,10 @@ class Users extends CI_Controller {
         }
         else{
             if(!$this->ion_auth->register($_POST['username'], $_POST['password'], $_POST['email'])){
-                echo $this->db->error_message();
-            }
-            if(!$this->ion_auth->login($_POST['username'], $_POST['password'], true)){
-                echo $this->db->error_message();
+                echo 'failed to register for some reason';
             }
             echo validation_errors();   
         }
-        
     }
 
     public function username_check($username){
