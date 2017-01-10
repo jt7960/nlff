@@ -11,6 +11,9 @@ class League extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->add_package_path(APPPATH.'third_party/ion_auth/');
         $this->load->library('ion_auth');
+        if(!$this->ion_auth->logged_in()){
+            redirect('/');
+        }
     }
     public function index(){
         //some code;
@@ -41,7 +44,6 @@ class League extends CI_Controller {
         $this->load->view('/league/players.php', $data);
         $this->load->view('/common/footer.php');
     }
-
     private function upload_team_icon($file){
         $target_dir = "uploads/team_icons/";
         $target_file = $target_dir . basename($file["team_icon"]["name"]);
