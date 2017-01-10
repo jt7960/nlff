@@ -41,19 +41,7 @@ class League extends CI_Controller {
         $this->load->view('/league/players.php', $data);
         $this->load->view('/common/footer.php');
     }
-    public function draft_date_is_in_the_future($draft_date){
-        $now = getdate();
-        $timestamp = strtotime($draft_date);
-        if($timestamp < $now[0]){
-            $this->form_validation->set_message('draft_date_is_in_the_future', 'Draft Date must be in the future');
-            return false;
-        }
-        //another condition should go here to verify the draft date is within the range of valid draft dates for a given season
-        else{
-            return true;
-        }
-        
-    }
+
     private function upload_team_icon($file){
         $target_dir = "uploads/team_icons/";
         $target_file = $target_dir . basename($file["team_icon"]["name"]);
