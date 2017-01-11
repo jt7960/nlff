@@ -148,6 +148,23 @@ class Home extends CI_Controller {
             $this->load->view('/common/footer.php');
         }   
     }
+
+    //begin redo join league attempt block
+    public function join_league(){
+        $header_data['title'] = 'Join League';
+        if($_POST){
+
+        }
+        else{
+            $this->load->view('/common/header.php', $header_data);
+            $this->load->view('/common/title_bar.php');
+            $this->load->view('/home/join_league.php');
+            $this->load->view('/common/footer.php');
+        }
+    }
+
+    //end redo join league attempt block
+
     //form validation
     public function draft_date_is_in_the_future($draft_date){
         $now = getdate();
@@ -174,6 +191,7 @@ class Home extends CI_Controller {
             return false;
         }
     }
+    
 
 
 }
