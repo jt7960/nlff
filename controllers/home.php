@@ -151,12 +151,21 @@ class Home extends CI_Controller {
 
     //begin redo join league attempt block
     public function join_league(){
-        $header_data['title'] = 'Join League';
+        if(!$this->ion_auth->logged_in()){
+            redirect('/');
+        }
+        $user = $this->ion_auth->user()->row();
+        $user_id = $user->id;   
+        
+
+        $data['open_leagues'] = $this->Home_model->get_open_leagues();
+        $data['error'] = '';
+        $data['title'] = 'Join League';
         if($_POST){
 
         }
         else{
-            $this->load->view('/common/header.php', $header_data);
+            $this->load->view('/common/header.php', $data);
             $this->load->view('/common/title_bar.php');
             $this->load->view('/home/join_league.php');
             $this->load->view('/common/footer.php');
