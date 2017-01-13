@@ -29,7 +29,7 @@
                                 <td>'.$open_league->league_id.'</td>
                                 <td>'.$open_league->cur_teams.'/'.$open_league->num_teams.'</td>
                                 <td>'.$date.'</td>
-                                <td><a href="/home/join_public_league/'.$open_league->league_id.'">Join Link</a></td>
+                                <td><a league_id="'.$open_league->league_id.'" password="" class="load_join_league_form_link" href="/home/load_join_league_form">Join League</a></td>
                                 </tr>';
                             }
                         //print_r($open_leagues);
@@ -52,55 +52,19 @@
 
                     //Password
                     echo '<div class="form-group">';
-                    $data = array('id'=>'league_password_input', 'class'=>'form-control', 'name'=>'league_password');
-                    echo '<label for="league_password_input">League Password</label>';
+                    $data = array('id'=>'password_input', 'class'=>'form-control', 'name'=>'password_input');
+                    echo '<label for="password_input">League Password</label>';
                     echo form_password($data);
                     echo '</div>';
                     
                     //SUBMIT
-                    
-                    echo form_submit('mysubmit', 'Join');
+                    $data = array('id'=>'load_join_league_form_submit', 'class'=>'');
+                    echo form_submit('mysubmit', 'Join', $data);
                 ?>
                     </form>
                 </div>
                 <div id='join_league_form'>
-                                <?php
-                $attributes = array('name'=>'join_league_form', 'enctype'=>'multipart/form-data');
-                echo form_open_multipart('home/join_public_league/'.$league_data->league_id, $attributes); 
-            ?>
-            <div class='form-group'>
-                <label for='team_name'>Team Name</label>
-                <?php
-                    $data = array('id'=>'', 'class'=>'form-control', 'name'=>'team_name', 'value'=>set_value('team_name'));
-                    echo form_input($data);
-                ?>
-            </div>
-            <div class='form-group'>
-                <label for='draft_position'>Draft Position</label>
-                <?php
-                $attributes = array('class'=>'form-control text-center');
-                echo form_dropdown('draft_position', $open_draft_positions, '', $attributes);
-                ?>
-            </div>
-            <div class='form-group'>
-                <label for='team_icon'>Team Icon</label>
-                <?php
-                    $data = array('id'=>'input_team_icon', 'class'=>'form-control', 'type'=>'file', 'name'=>'team_icon', 'value'=>set_value('team_icon'));
-                    echo form_input($data);
-                ?>
-            </div>
-            <div class='form-group'>
-                <?php
-                    //$data = array('id'=>'submit_join_league', 'class'=>'btn-default', 'form'=>'join_league_form', 'type'=>'submit');
-                    //echo form_submit('submit_join_league', 'Submit', $data);
-                ?>
-                <button type="submit"  class="btn btn-primary">Submit</button>
-            </div>
-            
-        </div> <!-- end form-group-->
-        <?php
-            echo form_close();
-        ?>
+                    <!--Ajax in the form-->
                 </div>
             </div>
         </div>

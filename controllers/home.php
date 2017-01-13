@@ -26,32 +26,6 @@ class Home extends CI_Controller {
         $this->load->view('/home/home.php');
         $this->load->view('/common/footer.php');
     }
-    public function open_leagues(){
-        $user = $this->ion_auth->user()->row();
-        $user_id = $user->id;
-        $data['title'] = 'Join A League';
-        $data['open_leagues'] = $this->Home_model->get_open_leagues();
-        $data['error'] = '';
-        if($_POST){
-            $league_id = $_POST['league_id'];
-            $password = $_POST['league_password'];
-            $this->form_validation->set_rules('league_id', 'League ID', 'required');
-            $this->form_validation->set_rules('league_password', 'Password', 'required');
-            if($this->form_validation->run() == true){
-                if($this->League_model->check_private_league_credentials(array('league_id'=>$league_id, 'password'=>$password))){
-                    $this->League_model->join_private_league(array('user_id'=>$user->id, 'league_id'=>$league_id, 'draft_position'=>'0'));
-                    redirect('/league/'.$league_id);
-                }
-                else{
-                    $data['error']= 'failed to join league';
-                }
-            }
-        }
-        $this->load->view('/common/header.php', $data);
-        $this->load->view('/common/title_bar.php');
-        $this->load->view('/home/open_leagues.php');
-        $this->load->view('/common/footer.php');
-    }
     public function create_league(){
         $data['title'] = 'Create a New League';
 
@@ -84,39 +58,49 @@ class Home extends CI_Controller {
             $this->load->view('common/footer.php');
             }   
     }
-    public function join_public_league($league_id){
-        $data['title'] = 'Join League';
-        $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($league_id);
-        $data['error_message'] = '';
-        $league_data['league_data'] = $this->League_model->get_league_data($league_id);
+    public function load_join_league_form(){
+        if($_POST && $this->League_model->check_league_credentials(array('league_id'=>$_POST['league_id'], 'password'=>$_POST['password']))){
+            $data['league_data'] = $this->League_model->get_league_data($_POST['league_id']);
+            $data['open_draft_positions'] = $this->League_model->get_open_draft_positions($_POST['league_id']);    
+            $this->load->view('home/join_league_form', $data);
+        }
+    }
+    //begin redo join league attempt block
+    public function join_league(){
+        if(!$this->ion_auth->logged_in()){
+            redirect('/');
+        }
         $user = $this->ion_auth->user()->row();
-        $user_id = $user->id;
+        $user_id = $user->id;   
+        $data['open_leagues'] = $this->Home_model->get_open_leagues();
+        $data['error'] = '';
+        $data['title'] = 'Join League';
         if($_POST){
             //form validation
-            $this->form_validation->set_rules('team_name', 'Team Name', 'required');       
-
+            $this->form_validation->set_rules('team_name', 'Team Name', 'required');  
+            $league_id = $_POST['league_id'];
+            $team_name = $_POST['team_name'];
+            $draft_position = $_POST['draft_position'];
             if($this->form_validation->run() == FALSE){
-                $this->load->view('/common/header.php', $data);
+                $this->load->view('/common/header.php');
                 $this->load->view('/common/title_bar.php');
-                $this->load->view('/league/join_league.php', $league_data);
+                $this->load->view('/home/join_league.php', $data);
                 $this->load->view('/common/footer.php');
             }
             else{
-                //turn post into variables
-                $team_name = $_POST['team_name'];
-                $draft_position = $_POST['draft_position'];
                 //handle the team icon upload
-                if($_FILES['team_icon']['size'] !== 0){
-                    $upload_status = $this->upload_team_icon($_FILES);
+                if($_FILES['team_icon']['size'] !== 0){ //if the file size is bigger than 0, in other words, if a file was selected in the form
+                    $upload_status = $this->upload_team_icon($_FILES); //$upload status is what was returned by the function to upload the file
                 }
                 else{
-                    $upload_status = array(true, '');
+                    $upload_status = array(true, ''); //no file was chosen, allow the form to go through, enter '' into database
                 }
                 
-                if($upload_status[0] == false){
-                    $this->load->view('/common/header.php', $data);
+                if($upload_status[0] == false){ //if the file upload function returned false, somthing went wrong
+                    $data['error'] = $upload_status[1];
+                    $this->load->view('/common/header.php');
                     $this->load->view('/common/title_bar.php');
-                    $this->load->view('/league/join_league.php', $league_data);
+                    $this->load->view('/home/join_league.php', $data);
                     $this->load->view('/common/footer.php');
                 }
                 else{
@@ -127,53 +111,29 @@ class Home extends CI_Controller {
                 $join_data_array['team_icon'] = $upload_status[1];
                 $join_data_array['user_id'] = $user->id;
                 //print_r($join_data_array);
-                $join_league_status = $this->League_model->join_league($join_data_array);
+                $join_league_status = $this->Home_model->join_league($join_data_array);
                     if($join_league_status[0] == true ){
                     redirect('/league/'.$league_id, 'refresh');
                     }
                     else{
-                    $league_data['error message'] = $join_league_status[1];
-                    $this->load->view('/common/header.php', $data);
+                    $data['error'] = $join_league_status[1];
+                    $this->load->view('/common/header.php');
                     $this->load->view('/common/title_bar.php');
-                    $this->load->view('/league/join_league.php', $league_data);
+                    $this->load->view('/home/join_league.php', $data);
                     $this->load->view('/common/footer.php');
                     }
                 }
             }
         }
         else{
-            $this->load->view('/common/header.php', $data);
+            $this->load->view('/common/header.php');
             $this->load->view('/common/title_bar.php');
-            $this->load->view('/league/join_league.php', $league_data);
-            $this->load->view('/common/footer.php');
-        }   
-    }
-
-    //begin redo join league attempt block
-    public function join_league(){
-        if(!$this->ion_auth->logged_in()){
-            redirect('/');
-        }
-        $user = $this->ion_auth->user()->row();
-        $user_id = $user->id;   
-        
-
-        $data['open_leagues'] = $this->Home_model->get_open_leagues();
-        $data['error'] = '';
-        $data['title'] = 'Join League';
-        if($_POST){
-
-        }
-        else{
-            $this->load->view('/common/header.php', $data);
-            $this->load->view('/common/title_bar.php');
-            $this->load->view('/home/join_league.php');
+            $this->load->view('/home/join_league.php', $data);
             $this->load->view('/common/footer.php');
         }
     }
-
     //end redo join league attempt block
-
+    
     //form validation
     public function draft_date_is_in_the_future($draft_date){
         $now = getdate();
@@ -188,6 +148,7 @@ class Home extends CI_Controller {
         }
         
     }
+
     //other functions
     private function league_is_public($league_id){
         $sql = "SELECT public from t_leagues WHERE league_id = ?";
@@ -200,6 +161,53 @@ class Home extends CI_Controller {
             return false;
         }
     }
+    private function upload_team_icon($file){
+        $target_dir = "uploads/team_icons/";
+        $target_file = $target_dir . basename($file["team_icon"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        // Check if image file is a actual image or fake image
+        $check = getimagesize($file["team_icon"]["tmp_name"]);
+        if($check !== false){
+            //echo "File is an image - " . $check["mime"] . ".";
+            $uploadOk = 1;
+        } 
+        else{
+            $message = "File is not an image.";
+            $uploadOk = 0;
+        }
+        // Check if file already exists
+        if (file_exists($target_file)) {
+            //I need to find a way to rename the file instead of crashing here.
+            $message = "Sorry, file already exists.";
+            $uploadOk = 0;
+        }
+        // Check file size
+        if ($file["team_icon"]["size"] > 500000) {
+            $message = "Sorry, your file is too large.";
+            $uploadOk = 0;
+        }
+        // Allow certain file formats
+        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+        && $imageFileType != "gif" ) {
+            $message =  "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+            $uploadOk = 0;
+        }
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            return array(false, "Sorry, your file was not uploaded." . $message);
+        // if everything is ok, try to upload file
+        }
+        else{
+            if (move_uploaded_file($file["team_icon"]["tmp_name"], $target_file)){
+                $message =  "The file ". basename( $file["team_icon"]["name"]). " has been uploaded.";
+                return array(true, $target_file);
+            }
+            else{
+                return array(false, "There was an error uploading your file.");
+            }
+        }
+}
     
 
 
