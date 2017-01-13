@@ -1,3 +1,8 @@
+<!--TO do 
+    update file upload function to rename files when they are uploaded, instead of denying duplicate file namespace
+    add code to check for, and make sure a user cannot join the same private league twice
+-->
+
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller {
