@@ -5,10 +5,6 @@ class League_model extends CI_Model{
     public function __construct(){
             $this->load->database();
     }
-    public function league_exists($league_id){
-        $sql = 'SELECT COUNT(*) FROM t_leagues WHERE league_id = ?';
-        $result = $this->db->query($sql);
-    }
     public function get_league_members($league_id){
         $league_users = array();
         $sql = "SELECT user_id FROM t_teams WHERE league_id = ?";
@@ -59,6 +55,16 @@ class League_model extends CI_Model{
         }
         else{
             return false;
+        }
+    }
+    public function league_exists($league_id){
+        $this->db->where('league_id', $league_id);
+        $this->db->from('t_leagues');
+        if($this->db->count_all_results() < 1){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 }

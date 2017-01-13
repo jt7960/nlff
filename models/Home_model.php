@@ -89,9 +89,9 @@ class Home_model extends CI_Model{
         }
         return array(true, "Welcome to League: " . $array['league_id']);
     }
-    private function user_is_in_league($league_id, $user_id){
+    public function user_is_in_league($league_id, $user_id){
         $this->db->where(array('user_id'=>$user_id, 'league_id'=>$league_id));
-        $this->db->from('t_leagues');
+        $this->db->from('t_teams');
         if($this->db->count_all_results() > 0){
             return true;
         }

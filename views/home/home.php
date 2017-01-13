@@ -63,7 +63,7 @@
                 <?php
                 foreach ($leagues as $league){
                     foreach($league as $id => $name){
-                    echo "<a href='league/".$id."/home/'>".$name. "</a><br>";
+                    echo "<a href='league/home/".$id."'>".$name. "</a><br>";
                 }}
                 ?>
             

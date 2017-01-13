@@ -1,5 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
-
+//What is the best way to set the league_id? configure it in the constructor? how? 
 class League extends CI_Controller {
     
     public function __construct(){
@@ -14,16 +14,15 @@ class League extends CI_Controller {
         if(!$this->ion_auth->logged_in()){
             redirect('/');
         }
+
     }
     public function index(){
-        //some code;
+        redirect('/');
     }
-    public function home($id){
-        $this->id = $id;
-        //verify the user is in the league
-            $league_users = $this->League_model->get_league_members($id);
-        //check if the user is the commish
-            $league_commissioners = $this->League_model->get_league_commissioners($id);
+    public function home($league_id){
+        $this->redirect_bad_league_ids($league_id);
+        $this->load->view('common/header.php');
+        $this->load->view('common/title_bar.php');
     }
     public function players(){
         $data['leagues'] = array();
@@ -88,6 +87,11 @@ class League extends CI_Controller {
             else{
                 return array(false, "Sorry, there was an error uploading your file.");
             }
+        }
+    }
+    private function redirect_bad_league_ids($league_id){
+        if(!isset($league_id) || !$this->League_model->league_exists($league_id)){
+            redirect('/');
         }
     }
 

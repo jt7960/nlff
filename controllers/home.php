@@ -1,8 +1,11 @@
 <!--TO do 
+    Fix links and forwards to the league home
     DONE! update file upload function to rename files when they are uploaded, instead of denying duplicate file namespace
     DONE! add code to check for, and make sure a user cannot join the same league twice
     DONE! make it so a user can only be in 10 leagues
     Clean up the join league function, add a tracking variable and only out put the view at the end of the if/else logic, not multiple times
+    Make the login form an actual form again (as apposed to just fields)
+    Not all of users leagues are showing up on the home page
 
 -->
 
