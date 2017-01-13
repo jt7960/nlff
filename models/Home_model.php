@@ -89,19 +89,25 @@ class Home_model extends CI_Model{
         }
         return array(true, "Welcome to League: " . $array['league_id']);
     }
-
-//Business Rules
-//A user can only be the founder of 1 public league
-    public function get_users_public_leagues_count($user_id){
-        $this->db->where('user_id', $user_id);
-        $this->db->where('public', '1');
+    private function user_is_in_league($league_id, $user_id){
+        $this->db->where(array('user_id'=>$user_id, 'league_id'=>$league_id));
         $this->db->from('t_leagues');
-        if($this->db->count_all_results() > 1){
-            return FALSE;
+        if($this->db->count_all_results() > 0){
+            return true;
         }
         else{
-            return TRUE;
-        }
-    }     
+            return false;
+        } 
+    }
+
+//Business Rules
+//A user can only be in 10 leagues
+//this function will eventually need to account for old seasons
+    public function get_users_league_count($user_id){
+        $this->db->where('user_id', $user_id);
+        $this->db->from('t_teams');
+        return $this->db->count_all_results();
+    }
+
 
 }

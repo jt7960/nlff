@@ -1,6 +1,9 @@
 <!--TO do 
-    update file upload function to rename files when they are uploaded, instead of denying duplicate file namespace
-    add code to check for, and make sure a user cannot join the same private league twice
+    DONE! update file upload function to rename files when they are uploaded, instead of denying duplicate file namespace
+    DONE! add code to check for, and make sure a user cannot join the same league twice
+    DONE! make it so a user can only be in 10 leagues
+    Clean up the join league function, add a tracking variable and only out put the view at the end of the if/else logic, not multiple times
+
 -->
 
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
@@ -21,9 +24,11 @@ class Home extends CI_Controller {
     //Site Pages
     public function index(){
         $data['leagues'] = array();
+        $data['num_leagues'] = '';
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
             $data['leagues'] = $this->Home_model->get_users_leagues($user->id);
+            $data['num_leagues'] = $this->Home_model->get_users_league_count($user->id); 
         }
         $this->load->view('/common/header.php', $data);
         $this->load->view('/common/title_bar.php');
@@ -32,6 +37,11 @@ class Home extends CI_Controller {
         $this->load->view('/common/footer.php');
     }
     public function create_league(){
+        $user = $this->ion_auth->user()->row();
+        if($this->Home_model->get_users_league_count($user->id) > 9){
+            redirect('/');
+        }
+        
         $data['title'] = 'Create a New League';
 
         if($_POST){ //if a the form was submitted
@@ -72,7 +82,14 @@ class Home extends CI_Controller {
     }
     //begin redo join league attempt block
     public function join_league(){
+        
         if(!$this->ion_auth->logged_in()){
+            redirect('/');
+        }
+        else{
+            $user = $this->ion_auth->user()->row();
+        }
+        if($this->Home_model->get_users_league_count($user->id) > 9){
             redirect('/');
         }
         $user = $this->ion_auth->user()->row();
@@ -115,7 +132,10 @@ class Home extends CI_Controller {
                 $join_data_array['draft_position'] = $draft_position;
                 $join_data_array['team_icon'] = $upload_status[1];
                 $join_data_array['user_id'] = $user->id;
-                //print_r($join_data_array);
+                //Make sure the user isn't already in the league
+                if($this->Home_model->user_is_in_league( $league_id, $user_id)){
+                    $data['error'] = "You are already in this league";
+                }
                 $join_league_status = $this->Home_model->join_league($join_data_array);
                     if($join_league_status[0] == true ){
                     redirect('/league/'.$league_id, 'refresh');
@@ -155,22 +175,13 @@ class Home extends CI_Controller {
     }
 
     //other functions
-    private function league_is_public($league_id){
-        $sql = "SELECT public from t_leagues WHERE league_id = ?";
-        $query = $this->db->query($sql, $league_id);
-        $row = $query->row();
-        if($row->public == '1'){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+
     private function upload_team_icon($file){
         $target_dir = "uploads/team_icons/";
         $target_file = $target_dir . basename($file["team_icon"]["name"]);
         $uploadOk = 1;
         $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        
         // Check if image file is a actual image or fake image
         $check = getimagesize($file["team_icon"]["tmp_name"]);
         if($check !== false){
@@ -182,11 +193,11 @@ class Home extends CI_Controller {
             $uploadOk = 0;
         }
         // Check if file already exists
-        if (file_exists($target_file)) {
+        /*if (file_exists($target_file)) {
             //I need to find a way to rename the file instead of crashing here.
             $message = "Sorry, file already exists.";
             $uploadOk = 0;
-        }
+        }*/
         // Check file size
         if ($file["team_icon"]["size"] > 500000) {
             $message = "Sorry, your file is too large.";
@@ -204,15 +215,28 @@ class Home extends CI_Controller {
         // if everything is ok, try to upload file
         }
         else{
-            if (move_uploaded_file($file["team_icon"]["tmp_name"], $target_file)){
-                $message =  "The file ". basename( $file["team_icon"]["name"]). " has been uploaded.";
-                return array(true, $target_file);
+            $file_exists = true;
+            while($file_exists == true){
+                $rand = rand(0, 10000000);
+                $file_name = $target_dir . $rand .'.'. $imageFileType;
+                if(!file_exists($file_name)){
+                    if (move_uploaded_file($file["team_icon"]["tmp_name"], $file_name)){
+                    $message =  "The file ". basename( $file["team_icon"]["name"]). " has been uploaded.";
+                    return array(true, $file_name);
+                }
+                else{
+                    return array(false, "There was an error uploading your file.");
+                }
+                    $file_exists == false;
+                }
+                else{
+                    $file_exists == true;
+                }
             }
-            else{
-                return array(false, "There was an error uploading your file.");
-            }
+            
         }
-}
+    }
+
     
 
 

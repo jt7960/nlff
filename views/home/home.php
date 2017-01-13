@@ -46,10 +46,16 @@
             </div>
             <div class='col-md-4 col-height col-top'>
                 <div class='inside'>
-                <?php if($this->ion_auth->logged_in()): ?>
                     <div class='well' id='leagues-well'>
+                    <?php if(!$this->ion_auth->logged_in()): ?>
+                        <button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>
+                    <?php endif;?>
+                    <?php if($this->ion_auth->logged_in() && $num_leagues < 10): ?>
                         <a href='home/create_league' type='button' class='btn btn-primary btn-block'> Create A New League</a>
                         <a href='home/join_league' type='button' class='btn btn-primary btn-block'>Join A League</a>
+                    <?php elseif($this->ion_auth->logged_in() && $num_leagues > 9): ?>
+                        <div class="alert alert-warning" role="alert">You are in the maximun number of Leagues</div>
+                    <?php endif; ?>
                     </div>
                 </div>
                 <h1>My Leagues</h1>
@@ -60,14 +66,9 @@
                     echo "<a href='league/".$id."/home/'>".$name. "</a><br>";
                 }}
                 ?>
-                <?php else: ?>
-                    <div class='well' id='leagues-well'>
-                        <button type='button' class='btn btn-default btn-lg' id='loginBtn' data-toggle='modal' data-target='#loginModal'>Login To View Your Teams</button>
-                    </div>
-                    <?php endif; ?>
-                
+            
 
-                </div><!--end ofpublic leagues div-->
+                </div><!--end of public leagues div-->
             </div>
         </div>
     </div>
