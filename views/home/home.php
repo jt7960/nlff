@@ -63,7 +63,13 @@
                 <?php
                 foreach ($leagues as $league){
                     foreach($league as $id => $name){
-                    echo "<a href='league/home/".$id."'>".$name. "</a><br>";
+                        if($name == ''){
+                            echo "<a href='league/home/".$id."'>Public League ".$id. "</a><br>";        
+                        }
+                        else{
+                            echo "<a href='league/home/".$id."'>".$name. "</a><br>";
+                        }
+                    
                 }}
                 ?>
             

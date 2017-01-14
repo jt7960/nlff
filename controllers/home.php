@@ -5,7 +5,7 @@
     DONE! make it so a user can only be in 10 leagues
     Clean up the join league function, add a tracking variable and only out put the view at the end of the if/else logic, not multiple times
     Make the login form an actual form again (as apposed to just fields)
-    Not all of users leagues are showing up on the home page
+    DONE! Not all of users leagues are showing up on the home page
 
 -->
 
