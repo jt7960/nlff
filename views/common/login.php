@@ -14,7 +14,7 @@
                         <div class='row'>
                             <div class='col-md-6'>
                                 <h3>Login</h3>
-                               <!--<form id='login_form' method='post'>-->
+                               <form id='login_form' method='post'>
                                     <input type='hidden' name='page' id='page' value='<?php echo $_SERVER['REQUEST_URI'] ?>'>
                                     <div class='form-group' >
                                         <label for='username'><span class='glyphicon glyphicon-user'></span> Username</label>
@@ -25,7 +25,7 @@
                                         <input type='password' class='form-control' name='password' id='login_password' placeholder='Enter Password'>
                                     </div>
                                     <div class='checkbox'>
-                                        <!--<input type='hidden' id='remember_me_true' name='remember_me' value='FALSE'></input>-->
+                                        <input type='hidden' id='remember_me_true' name='remember_me' value='FALSE'></input>
                                         <label><input id='remember_me' type='checkbox' 'name='remember_me' value='TRUE' checked>Remember me</label>
                                     </div>
                                     <button class='btn btn-default btn-success btn-block' id='login_submit' ><span class='glyphicon glyphicon-off'></span>Login</button>

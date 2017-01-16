@@ -67,6 +67,12 @@ class League_model extends CI_Model{
             return true;
         }
     }
+    public function get_team_data($league_id, $user_id){
+        $sql = ('SELECT * FROM t_teams WHERE league_id = ? AND user_id = ?' );
+        $query = $this->db->query($sql, array('league_id'=>$league_id, 'user_id'=>$user_id));
+        return $query->row();
+    }
+    public function get_team_players($team_id){}
 }
 
 ?>

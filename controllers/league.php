@@ -14,15 +14,23 @@ class League extends CI_Controller {
         if(!$this->ion_auth->logged_in()){
             redirect('/');
         }
-
+        else{
+            $this->user = $this->ion_auth->user()->row();
+        }
     }
     public function index(){
         redirect('/');
     }
     public function home($league_id){
+        $league_data = $this->League_model->get_league_data($league_id);
+        $team_data = $this->League_model->get_team_data($league_id, $this->user->id);
+        $data['league_data'] = $league_data;
+        $data['team_data'] = $team_data;
         $this->redirect_bad_league_ids($league_id);
         $this->load->view('common/header.php');
         $this->load->view('common/title_bar.php');
+        $this->load->view('league/home.php', $data);
+        $this->load->view('common/footer.php');
     }
     public function players(){
         $data['leagues'] = array();
