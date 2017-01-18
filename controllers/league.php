@@ -32,7 +32,7 @@ class League extends CI_Controller {
         $this->load->view('league/home.php', $data);
         $this->load->view('common/footer.php');
     }
-    public function players(){
+    public function players($league_id){
         $data['leagues'] = array();
         if($this->ion_auth->logged_in()){
             $user = $this->ion_auth->user()->row();
@@ -50,6 +50,13 @@ class League extends CI_Controller {
 
         $this->load->view('/league/players.php', $data);
         $this->load->view('/common/footer.php');
+    }
+    public function settings($league_id){
+        $data['league_id'] = $league_id;
+        $this->load->view('common/header.php');
+        $this->load->view('common/title_bar.php');
+        $this->load->view('league/settings.php', $data);
+        $this->load->view('common/footer.php');
     }
     private function upload_team_icon($file){
         $target_dir = "uploads/team_icons/";

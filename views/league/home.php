@@ -17,10 +17,10 @@
             <div class="list-group" id='links'>
                 <!--should be some logic to include administrator links-->
                 <!--this might be ajaxed in, might need a 'league navigation' file that gets pulled in, instead of repeating the same code-->
-                <?php echo "<a href='League/Home/".$league_data->league_id."' class='list-group-item' type='user'>Home</a>"; ?>
-                <?php echo "<a href='League/Team/".$league_data->league_id."/".$team_data->team_id."' class='list-group-item' type='user'>My Team</a>"; ?>
-                <?php echo "<a href='League/Home/Players' class='list-group-item' type='user'>Players</a>"; ?>
-                <?php echo "<a href='League/Settings/".$league_data->league_id."' class='list-group-item' type='admin'>League Settings</a>"; ?>
+                <?php echo "<a href='/league/home/".$league_data->league_id."' class='list-group-item' type='user'>Home</a>"; ?>
+                <?php echo "<a href='/league/team/".$league_data->league_id."/".$team_data->team_id."' class='list-group-item' type='user'>My Team</a>"; ?>
+                <?php echo "<a href='/league/players' class='list-group-item' type='user'>Players</a>"; ?>
+                <?php echo "<a href='/league/settings/".$league_data->league_id."' class='list-group-item' type='admin'>League Settings</a>"; ?>
             </div>
         </div>
         <div class='col-md-8 text-center'>
